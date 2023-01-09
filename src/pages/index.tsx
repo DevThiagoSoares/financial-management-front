@@ -94,44 +94,9 @@ export default function SignInSide() {
               onSubmit={handleSubmit(onSubmit)}
               sx={{ mt: 1 }}
             >
-              <Controller
-                name="email"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email"
-                    autoComplete="email"
-                    autoFocus
-                    helperText={errors.email?.message}
-                    FormHelperTextProps={{ error: !!errors.email?.message }}
-                    {...field}
-                  />
-                )}
-              />
-              <Controller
-                name="password"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="Senha"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    helperText={errors.password?.message}
-                    FormHelperTextProps={{ error: !!errors.password?.message }}
-                    {...field}
-                  />
-                )}
-              />
+              <Input errors={errors.email?.message} label="E-Mail" nameField="email"type="email" />
+              <Input errors={errors.password?.message} label="Senha" nameField="password"type="password" />
+
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
@@ -165,4 +130,25 @@ export default function SignInSide() {
       </Grid>
     </ThemeProvider>
   );
+
+  function Input({ nameField, label, errors, type }: { nameField: "email"|"password"; label: string; errors: any, type?: string}) {
+    return <Controller
+      name={nameField}
+      control={control}
+      rules={{ required: true }}
+      render={({ field }) => (
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id={nameField}
+          label={label}
+          type={type || "text"}
+          autoComplete={nameField}
+          autoFocus
+          helperText={errors}
+          FormHelperTextProps={{ error: !!errors }}
+          {...field} />
+      )} />;
+  }
 }
