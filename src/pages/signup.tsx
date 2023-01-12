@@ -18,6 +18,7 @@ import { signUpSchema } from "../utils/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUser } from "../services/user";
 import Router from "next/router";
+import { useSnackbar } from "notistack";
 
 function Copyright(props: any) {
   return (
@@ -40,6 +41,7 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignUpSide() {
+  const { enqueueSnackbar } = useSnackbar();
   const {
     handleSubmit,
     control,
@@ -65,14 +67,17 @@ export default function SignUpSide() {
       setSamePassword(true);
       return;
     }
-    const {confirmPassword, email, name, password, isAdmin} = data;
+    let {confirmPassword, login, name, password, isAdm} = data;
+
+    isAdm = true;
     console.log("data", data);
     await createUser({
-      email,
+      login,
       name,
       password,
-      isAdmin
+      isAdm
     }).then(() => {
+      enqueueSnackbar("Usuario cadastrado com sucesso", { variant: "info" });
       Router.push("/");
     });
   };
@@ -139,7 +144,7 @@ export default function SignUpSide() {
                 )}
               />
               <Controller
-                name="email"
+                name="login"
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -147,12 +152,12 @@ export default function SignUpSide() {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="login"
                     label="Email"
-                    autoComplete="email"
+                    autoComplete="login"
                     autoFocus
-                    helperText={errors.email?.message}
-                    FormHelperTextProps={{ error: !!errors.email?.message }}
+                    helperText={errors.login?.message}
+                    FormHelperTextProps={{ error: !!errors.login?.message }}
                     {...field}
                   />
                 )}

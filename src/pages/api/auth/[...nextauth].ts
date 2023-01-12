@@ -8,18 +8,18 @@ export default NextAuth({
     CredentialsProvider({
       name: "APP",
       credentials: {
-        email: { label: "email", type: "email",   },
+        login: { label: "login", type: "email",   },
         password: { label: "password", type: "password" },
       },
       authorize: async (req:any): Promise<any> => {
         const payload = {
-          email: req.email,
+          login: req.login,
           password: req.password,
         };
 
         const res = await axios.post(
-          `${process.env.NEXTAUTH_URL}/api/auth/login`,
-          { email: payload.email, password: payload.password },
+          `${process.env.SERVER_URL}/auth/login`,
+          { login: payload.login, password: payload.password },
           {
             headers: {
               "Content-Type": "application/json",
@@ -39,11 +39,13 @@ export default NextAuth({
   callbacks: {
     async session({ session, token }) {
       let sessionObj = {
-        accessToken: token?.accessToken as string,
+        accessToken: token?.access_token as string,
         user: { 
           name : token?.name as string,
           image : token?.image as string,
           email: token?.email as string,
+          isAdm : token?.isAdm as boolean,
+          id : token?.id as string,
         },
         expires: "24h"
       }
@@ -55,26 +57,18 @@ export default NextAuth({
       if (user) {
         token = {
           // @ts-ignore
-          accessToken : user?.accessToken,
+          access_token : user?.access_token,
           // @ts-ignore
-          name : user?.nome as string,
+          name : user?.name as string,
           // @ts-ignore
-          email: user?.email as string,
+          email: user?.login as string,
           // @ts-ignore
-          cpf : user?.cpf,
+          isAdm : user?.isAdm as boolean,
           // @ts-ignore
           image : user?.id as string,
           // @ts-ignore
-          id : user?.id,
-          // @ts-ignore
-          paf : user?.paf,
-          // @ts-ignore
-          atendente : user?.atendente,
-          // @ts-ignore
-          empresa : user?.empresa as string[],
-          // @ts-ignore
-          role : user?.role as string,
-
+          id : user?.id as string,
+          
         }
       }
       return token;

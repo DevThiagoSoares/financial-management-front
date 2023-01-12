@@ -1,7 +1,7 @@
 export interface ISignUp {
   name: string;
-  email: string;
+  login: string;
   password: string;
   confirmPassword?: string;
-  isAdmin?: boolean;
+  isAdm?: boolean;
 }

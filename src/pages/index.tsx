@@ -16,6 +16,8 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ILogin } from "../types/login";
 import { loginSchema } from "../utils/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import { useSnackbar } from "notistack";
 
 function Copyright(props: any) {
   return (
@@ -38,6 +40,7 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignInSide() {
+  const { enqueueSnackbar } = useSnackbar();
   const {
     handleSubmit,
     control,
@@ -50,105 +53,152 @@ export default function SignInSide() {
   const onSubmit: SubmitHandler<ILogin> = async (data) => {
     console.log("Errors", errors);
     console.log("data", data);
-  };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t: any) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+    const isValidate = await loginSchema.parse(data);
+
+    if (isValidate) {
+      const res = await signIn("credentials", {
+        login: data.login,
+        password: data.password,
+
+        callbackUrl: `${window.location.origin}/app/logado`,
+      });
+      enqueueSnackbar("Login realizado com sucesso!", { variant: "success" });
+      if (res?.error) {
+        enqueueSnackbar(res.error, { variant: "error" });
+      }
+    }
+  }
+
+    return (
+      <ThemeProvider theme={theme}>
+        <Grid container component="main" sx={{ height: "100vh" }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
             sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              backgroundImage: "url(https://source.unsplash.com/random)",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t: any) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
+          />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Login
-            </Typography>
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit(onSubmit)}
-              sx={{ mt: 1 }}
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <Input errors={errors.email?.message} label="E-Mail" nameField="email"type="email" />
-              <Input errors={errors.password?.message} label="Senha" nameField="password"type="password" />
-
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                // check if fields are empty or not
-                disabled={Object.keys(errors).length > 0}
-                sx={{ mt: 3, mb: 2 }}
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Login
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit(onSubmit)}
+                sx={{ mt: 1 }}
               >
-                Entrar
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  {/* <Link href="#" variant="body2">
+                <Input
+                  errors={errors.login?.message}
+                  label="E-Mail"
+                  nameField="login"
+                  type="email"
+                />
+                <Input
+                  errors={errors.password?.message}
+                  label="Senha"
+                  nameField="password"
+                  type="password"
+                />
+
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  // check if fields are empty or not
+                  disabled={Object.keys(errors).length > 0}
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Entrar
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    {/* <Link href="#" variant="body2">
                     Forgot password?
                   </Link> */}
-                </Grid>
-                <Grid item>
+                  </Grid>
+                  <Grid item>
                     <Link href="/signup" variant="body2">
                       {"não tem uma conta? Cadastre-se"}
                     </Link>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </ThemeProvider>
-  );
-
-  function Input({ nameField, label, errors, type }: { nameField: "email"|"password"; label: string; errors: any, type?: string}) {
-    return <Controller
-      name={nameField}
-      control={control}
-      rules={{ required: true }}
-      render={({ field }) => (
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id={nameField}
-          label={label}
-          type={type || "text"}
-          autoComplete={nameField}
-          autoFocus
-          helperText={errors}
-          FormHelperTextProps={{ error: !!errors }}
-          {...field} />
-      )} />;
+      </ThemeProvider>
+    );
+  
+  function Input({
+    nameField,
+    label,
+    errors,
+    type,
+  }: {
+    nameField: "login" | "password";
+    label: string;
+    errors: any;
+    type?: string;
+  }) {
+    return (
+      <Controller
+        name={nameField}
+        control={control}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id={nameField}
+            label={label}
+            type={type || "text"}
+            autoComplete={nameField}
+            autoFocus
+            helperText={errors}
+            FormHelperTextProps={{ error: !!errors }}
+            {...field}
+          />
+        )}
+      />
+    );
   }
 }

@@ -1,7 +1,7 @@
 import * as z from 'zod';
 
 export const loginSchema = z.object({
-  email: z.string({required_error: "Requerido"}).email({ message: 'E-mail inválido' }),
+  login: z.string({required_error: "Requerido"}).email({ message: 'E-mail inválido' }),
   password: z.string({required_error: "Requerido"}).regex(new RegExp(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/), {
     message: 'A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número ou caractere especial',
 }),
@@ -9,7 +9,7 @@ export const loginSchema = z.object({
 
 export const signUpSchema = z.object({
   name: z.string({required_error: "Requerido"}),
-  email: z.string({required_error: "Requerido"}).email({ message: 'E-mail inválido' }),
+  login: z.string({required_error: "Requerido"}).email({ message: 'E-mail inválido' }),
   password: z.string({required_error: "Requerido"}).regex(new RegExp(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/), {
     message: 'A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número ou caractere especial',
 }),
