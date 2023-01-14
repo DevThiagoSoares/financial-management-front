@@ -62,12 +62,11 @@ export default function SignUpSide() {
     if (data.password !== data.confirmPassword) {
       console.log("passwords are not the same");
       console.log(samePassword);
-      
-      
+
       setSamePassword(true);
       return;
     }
-    let {confirmPassword, login, name, password, isAdm} = data;
+    let { confirmPassword, login, name, password, isAdm } = data;
 
     isAdm = true;
     console.log("data", data);
@@ -75,7 +74,7 @@ export default function SignUpSide() {
       login,
       name,
       password,
-      isAdm
+      isAdm,
     }).then(() => {
       enqueueSnackbar("Usuario cadastrado com sucesso", { variant: "info" });
       Router.push("/");
@@ -92,7 +91,7 @@ export default function SignUpSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: "url(https://source.unsplash.com/random/?finance)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t: any) =>
               t.palette.mode === "light"
@@ -199,9 +198,7 @@ export default function SignUpSide() {
                       (samePassword === true && "Senhas não conferem")
                     }
                     FormHelperTextProps={{
-                      error:
-                      samePassword
-                      || !!errors.confirmPassword?.message
+                      error: samePassword || !!errors.confirmPassword?.message,
                     }}
                     {...field}
                   />

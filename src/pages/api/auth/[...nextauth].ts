@@ -2,7 +2,8 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { ILogin } from "../../../types/login";
-
+const {log, error, warn
+  ,debug} = console;
 export default NextAuth({
   providers: [
     CredentialsProvider({
@@ -77,6 +78,7 @@ export default NextAuth({
   pages: {
     error: "/",
     signOut: "/",
+    signIn: "/",
   },
   session: {
     strategy: "jwt",
@@ -106,6 +108,17 @@ export default NextAuth({
     async session(message) {
       //console.log(message);
     },
+  },
+  logger: {
+    error(code, metadata) {
+      error(code, metadata)
+    },
+    warn(code) {
+      warn(code)
+    },
+    debug(code, metadata) {
+      debug(code, metadata)
+    }
   },
   // log
   debug: true,
