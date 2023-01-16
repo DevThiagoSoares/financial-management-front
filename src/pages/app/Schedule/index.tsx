@@ -4,8 +4,9 @@ import { ToolbarContainer } from "../../../components/ToolbarContainer";
 import { ScheduleProps } from "./interfaces";
 import { columns } from "./table/columns";
 import { CreateModal } from "./models/createModal";
+import { DefaultLayout } from "../../../layouts/DefaultLayouts";
 
-export function Schedule() {
+export default function Schedule() {
   const [rows, setRows] = useState<ScheduleProps[]>([]);
 
   const responseData = [
@@ -368,12 +369,14 @@ export function Schedule() {
 
   return (
     <>
-      <CreateModal />
-      <ToolbarContainer
-        title="Agendamentos"
-        captionButton="Criar Agendamento"
-      />
-      <TableGrid rows={rows} columns={columns} />
+      <DefaultLayout>
+        <CreateModal />
+        <ToolbarContainer
+          title="Agendamentos"
+          captionButton="Criar Agendamento"
+        />
+        <TableGrid rows={rows} columns={columns} />
+      </DefaultLayout>
     </>
   );
 }
