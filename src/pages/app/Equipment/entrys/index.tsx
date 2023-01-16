@@ -11,9 +11,36 @@ import { ModalRegisterEquipment } from "./Models/ModalRegisterEquipment";
 import { ModalRegisterExit } from "./Models/ModalRegisterExit";
 
 import { ModalPrintReceipt } from "./Models/ModalPrintReceipt";
+import { api } from "../../../../services/api";
+import { getAllClients } from "../../../../services/client";
+import { useSession } from "next-auth/react";
 
-export function Entrys({ session }: { session: any }) {
-  const [rows, setRows] = useState<EntryProps[]>([]);
+interface ClientProps {
+  id: string;
+  name: string;
+  fone: string;
+  address: {
+    id: string;
+    street: string;
+    district: string;
+    number: string;
+    city: string;
+    clientId: string;
+    createdAt: Date;
+    updatedAt?: Date;
+  };
+  loan: {
+    id: string;
+    value_loan: number;
+    clientId: string;
+    createdAt: Date;
+    updatedAt?: Date;
+  }[];
+  createdAt?: Date;
+}
+
+export function Entrys() {
+  const [rows, setRows] = useState<ClientProps[]>([]);
   const { setOpen } = useModal();
   const [type, setType] = useState<{
     entry: boolean;
@@ -26,46 +53,58 @@ export function Entrys({ session }: { session: any }) {
     view: false,
     print: false,
   });
+  const { data: session } = useSession();
 
-  const responseData: EntryProps[] = [
-    {
-      id: "1",
-      name: "Adriane Lavareda de Almeida",
-      entryDate: "20/07/2022 15:14",
-      departureDate: "20/07/2022 15:14",
-      foto: "https://mui.com/static/images/avatar/7.jpg",
-    },
-    {
-      id: "2",
-      entryDate: "20/07/2022 15:14",
-      departureDate: "20/07/2022 15:14",
-      name: "Adriano Pinto de Souza",
-      foto: "https://mui.com/static/images/avatar/6.jpg",
-    },
+  useEffect(() => {
+    async function func() {
+      if (session.accessToken) {
+        console.log(session.accessToken);
+
+        const res = await getAllClients(session?.accessToken);
+
+        setRows(res.data.items);
+      }
+    }
+    console.log(func());
+  }, [session]);
+
+  const responseData: ClientProps[] = [
+    // {
+    //   id: ,
+    //   name: "Adriane Lavareda de Almeida",
+    //   entryDate: "20/07/2022 15:14",
+    //   departureDate: "20/07/2022 15:14",
+    //   foto: "https://mui.com/static/images/avatar/7.jpg",
+    // },
+    // {
+    //   id: "2",
+    //   entryDate: "20/07/2022 15:14",
+    //   departureDate: "20/07/2022 15:14",
+    //   name: "Adriano Pinto de Souza",
+    //   foto: "https://mui.com/static/images/avatar/6.jpg",
+    // },
   ];
 
   const columns: GridColDef[] = [
     {
-      headerName: "Foto",
-      field: "foto",
-      renderCell: (params: any) => (
-        <>
-          <Avatar src={params.value} />
-        </>
-      ),
-    },
-    {
       field: "name",
       headerName: "Nome",
     },
-
     {
-      field: "entryDate",
-      headerName: "Data/Hora de Entrada",
+      field: "data",
+      headerName: "Data do Emprestimo",
     },
     {
-      field: "departureDate",
-      headerName: "Data/Hora de Saída",
+      field: "dataFinal",
+      headerName: "Data do Pagamento",
+    },
+    {
+      field: "fees",
+      headerName: "Juros Aplicado",
+    },
+    {
+      field: "total",
+      headerName: "Valor a Pagar",
     },
   ];
 
@@ -108,7 +147,7 @@ export function Entrys({ session }: { session: any }) {
           onClick={handleOpenModalEntry}
           sx={{ marginLeft: "8px" }}
         >
-          REGISTRAR ENTRADA DE EQUIPAMENTO
+          CADASTRO DE CLIENTES
         </Button>
       </Box>
       <br />

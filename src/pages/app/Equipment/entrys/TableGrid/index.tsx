@@ -1,17 +1,17 @@
-import React from 'react'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import DevicesIcon from '@mui/icons-material/Devices'
-import PrintIcon from '@mui/icons-material/Print'
-import { table, tableContainer } from './styles'
-import { Box } from '@mui/system'
-import { Button, IconButton } from '@mui/material'
+import React from "react";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import DevicesIcon from "@mui/icons-material/Devices";
+import PrintIcon from "@mui/icons-material/Print";
+import { table, tableContainer } from "./styles";
+import { Box } from "@mui/system";
+import { Button, IconButton } from "@mui/material";
 
 interface TableGridProps {
-  rows: any[]
-  columns: GridColDef[]
-  exit: () => void
-  view: () => void
-  print: () => void
+  rows: any[];
+  columns: GridColDef[];
+  exit: () => void;
+  view: () => void;
+  print: () => void;
 }
 
 export function TableGrid({
@@ -23,29 +23,29 @@ export function TableGrid({
 }: TableGridProps) {
   const actionColumn: GridColDef[] = [
     {
-      field: 'menu',
-      headerName: ' ',
-      type: 'string',
-      align: 'right',
+      field: "menu",
+      headerName: " ",
+      type: "string",
+      align: "right",
       renderCell: (row: any) => (
         <>
-          <Box sx={{ mx: 'auto', width: '100' }}>
-            <IconButton>
+          <Box sx={{ mx: "auto", width: "100" }}>
+            {/* <IconButton>
               <DevicesIcon color="secondary" onClick={view} />
             </IconButton>
             <IconButton>
               <PrintIcon color="secondary" onClick={print} />
-            </IconButton>
+            </IconButton> */}
             <Button onClick={exit} sx={{ border: 1 }}>
-              registrar saída
+              REGISTRO DE PAGAMENTO
             </Button>
           </Box>
         </>
       ),
     },
-  ]
+  ];
 
-  columns = [...columns, ...actionColumn]
+  columns = [...columns, ...actionColumn];
   return (
     <Box sx={tableContainer}>
       <DataGrid
@@ -57,10 +57,10 @@ export function TableGrid({
           ...column,
           flex: 1,
           sortable: false,
-          headerClassName: 'super-app-theme--header',
+          headerClassName: "super-app-theme--header",
         }))}
         sx={table}
       />
     </Box>
-  )
+  );
 }

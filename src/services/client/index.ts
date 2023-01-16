@@ -14,6 +14,10 @@ export async function createClient(
   });
 }
 
-export async function getAllClients(data: ILogin): Promise<any> {
-  return await api.post("/auth/login", data);
+export async function getAllClients(token: string): Promise<any> {
+  return await api.get("/api/client", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
