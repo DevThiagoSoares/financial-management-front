@@ -69,7 +69,7 @@ export default function SignUpSide() {
     let { confirmPassword, login, name, password, isAdm } = data;
 
     isAdm = true;
-    console.log("data", data);
+
     await createUser({
       login,
       name,

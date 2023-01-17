@@ -2,17 +2,16 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { ILogin } from "../../../types/login";
-const {log, error, warn
-  ,debug} = console;
+const { log, error, warn, debug } = console;
 export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "APP",
       credentials: {
-        login: { label: "login", type: "email",   },
+        login: { label: "login", type: "email" },
         password: { label: "password", type: "password" },
       },
-      authorize: async (req:any): Promise<any> => {
+      authorize: async (req: any): Promise<any> => {
         const payload = {
           login: req.login,
           password: req.password,
@@ -41,36 +40,34 @@ export default NextAuth({
     async session({ session, token }) {
       let sessionObj = {
         accessToken: token?.access_token as string,
-        user: { 
-          name : token?.name as string,
-          image : token?.image as string,
+        user: {
+          name: token?.name as string,
+          image: token?.image as string,
           email: token?.email as string,
-          isAdm : token?.isAdm as boolean,
-          id : token?.id as string,
+          isAdm: token?.isAdm as boolean,
+          id: token?.id as string,
         },
-        expires: "24h"
-      }
-      console.log("sessionObj", sessionObj)
-      
+        expires: "24h",
+      };
+
       return sessionObj;
     },
-    async jwt({ token, user }) { 
+    async jwt({ token, user }) {
       if (user) {
         token = {
           // @ts-ignore
-          access_token : user?.access_token,
+          access_token: user?.access_token,
           // @ts-ignore
-          name : user?.name as string,
+          name: user?.name as string,
           // @ts-ignore
           email: user?.login as string,
           // @ts-ignore
-          isAdm : user?.isAdm as boolean,
+          isAdm: user?.isAdm as boolean,
           // @ts-ignore
-          image : user?.id as string,
+          image: user?.id as string,
           // @ts-ignore
-          id : user?.id as string,
-          
-        }
+          id: user?.id as string,
+        };
       }
       return token;
     },
@@ -111,16 +108,15 @@ export default NextAuth({
   },
   logger: {
     error(code, metadata) {
-      error(code, metadata)
+      error(code, metadata);
     },
     warn(code) {
-      warn(code)
+      warn(code);
     },
     debug(code, metadata) {
-      debug(code, metadata)
-    }
+      debug(code, metadata);
+    },
   },
   // log
   debug: true,
-
 });

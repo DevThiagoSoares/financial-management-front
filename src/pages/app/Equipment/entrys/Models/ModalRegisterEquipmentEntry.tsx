@@ -30,7 +30,16 @@ export function ModalRegisterEquipmentEntry() {
 
   const { data: session } = useSession();
   const onSubmit = async (data: ICreateCliente) => {
-    const { city, district, fone, loan, name, number, street } = data;
+    const {
+      city,
+      district,
+      fone,
+      value_loan,
+      interest_rate,
+      name,
+      number,
+      street,
+    } = data;
     try {
       createClient(
         {
@@ -42,7 +51,7 @@ export function ModalRegisterEquipmentEntry() {
             street,
             number,
           },
-          loan: [{ value_loan: +loan }],
+          loan: [{ value_loan: +value_loan, interest_rate: +interest_rate }],
         } as ICreateClientePost,
         session?.accessToken as string
       );
@@ -129,8 +138,16 @@ export function ModalRegisterEquipmentEntry() {
           <Input
             label="Valor do emprestimo"
             control={control}
-            errors={errors.loan?.message}
-            nameField="loan"
+            errors={errors.value_loan?.message}
+            nameField="value_loan"
+            type="text"
+            // add R$  before value input
+          />
+          <Input
+            label="Juros em %"
+            control={control}
+            errors={errors.interest_rate?.message}
+            nameField="interest_rate"
             type="text"
             // add R$  before value input
           />

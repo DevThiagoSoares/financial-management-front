@@ -67,24 +67,24 @@ export function Entrys() {
       }
     }
     console.log(func());
-  }, [session]);
+  }, [rows, session]);
 
-  const responseData: ClientProps[] = [
-    // {
-    //   id: ,
-    //   name: "Adriane Lavareda de Almeida",
-    //   entryDate: "20/07/2022 15:14",
-    //   departureDate: "20/07/2022 15:14",
-    //   foto: "https://mui.com/static/images/avatar/7.jpg",
-    // },
-    // {
-    //   id: "2",
-    //   entryDate: "20/07/2022 15:14",
-    //   departureDate: "20/07/2022 15:14",
-    //   name: "Adriano Pinto de Souza",
-    //   foto: "https://mui.com/static/images/avatar/6.jpg",
-    // },
-  ];
+  // const responseData: ClientProps[] = [
+  //   // {
+  //   //   id: ,
+  //   //   name: "Adriane Lavareda de Almeida",
+  //   //   entryDate: "20/07/2022 15:14",
+  //   //   departureDate: "20/07/2022 15:14",
+  //   //   foto: "https://mui.com/static/images/avatar/7.jpg",
+  //   // },
+  //   // {
+  //   //   id: "2",
+  //   //   entryDate: "20/07/2022 15:14",
+  //   //   departureDate: "20/07/2022 15:14",
+  //   //   name: "Adriano Pinto de Souza",
+  //   //   foto: "https://mui.com/static/images/avatar/6.jpg",
+  //   // },
+  // ];
 
   const columns: GridColDef[] = [
     {
@@ -119,9 +119,9 @@ export function Entrys() {
     },
   ];
 
-  useEffect(() => {
-    setRows(responseData);
-  }, []);
+  // useEffect(() => {
+  //   setRows(responseData);
+  // }, []);
 
   const handleOpenModalEntry = () => {
     setType({ entry: true, exit: false, view: false, print: false });

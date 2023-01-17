@@ -20,7 +20,6 @@ export function Visitors() {
   const listAll = () => {
     findManyVisitors()
       .then((response) => {
-        console.log("RESPOSE VISITORS", response);
         setPersonals(response.data);
       })
       .catch((error) => {

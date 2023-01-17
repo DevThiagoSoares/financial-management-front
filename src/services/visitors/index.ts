@@ -1,4 +1,3 @@
-
 import { api } from "../api";
 
 export async function createVisitor() {
@@ -10,6 +9,5 @@ export function findById(rg: string) {
 }
 
 export async function findManyVisitors() {
-  console.log("req");
   return await api.get("api/client");
 }
