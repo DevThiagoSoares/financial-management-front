@@ -32,6 +32,7 @@ interface ClientProps {
   loan: {
     id: string;
     value_loan: number;
+    interest_rate: number;
     clientId: string;
     createdAt: Date;
     updatedAt?: Date;
@@ -99,11 +100,21 @@ export function Entrys() {
       headerName: "Data do Pagamento",
     },
     {
-      field: "fees",
+      field: "value_loan",
+      renderCell: (param) => {
+        return param.row.loan[0].value_loan;
+      },
+      headerName: "Valor Emprestado",
+    },
+    {
+      field: "interest_rate",
+      renderCell: (param) => {
+        return param.row.loan[0].interest_rate + "%";
+      },
       headerName: "Juros Aplicado",
     },
     {
-      field: "total",
+      field: "pagar",
       headerName: "Valor a Pagar",
     },
   ];
