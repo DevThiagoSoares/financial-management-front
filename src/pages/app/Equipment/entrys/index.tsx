@@ -58,16 +58,13 @@ export function Entrys() {
 
   useEffect(() => {
     async function func() {
-      if (session.accessToken) {
-        console.log(session.accessToken);
-
+      if (session.accessToken as string) {
         const res = await getAllClients(session?.accessToken);
-
         setRows(res.data.items);
       }
     }
-    console.log(func());
-  }, [rows, session]);
+    func();
+  }, [session.accessToken]);
 
   // const responseData: ClientProps[] = [
   //   // {

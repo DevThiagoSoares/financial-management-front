@@ -52,10 +52,7 @@ export const createClientSchema = z.object({
   number: z.string({ required_error: "Requerido" }),
   city: z.string({ required_error: "Requerido" }),
   value_loan: z
-    .string({ required_error: "Requerido" })
-    .regex(new RegExp(/^[0-9]+$/), {
-      message: "O empréstimo deve conter apenas números",
-    }),
+    .string({ required_error: "Requerido" }),
   interest_rate: z
     .string({ required_error: "Requerido" })
     .regex(new RegExp(/^[0-9]+$/), {

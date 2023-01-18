@@ -1,8 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { getSession, useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+import { NumericFormat } from "react-number-format";
 
 import { ModalContainer } from "../../../../../components/ModalContainer";
 import Input from "../../../../../components/TextField";
@@ -23,6 +24,8 @@ export function ModalRegisterEquipmentEntry() {
     handleSubmit,
     control,
     reset,
+    register,
+    watch,
     formState: { errors },
   } = useForm<ICreateCliente>({
     resolver: zodResolver(createClientSchema),
@@ -41,6 +44,9 @@ export function ModalRegisterEquipmentEntry() {
       street,
     } = data;
     try {
+      const convertValue = (value: number) => {
+       return +value.toString().replaceAll("R$ ","").replaceAll(".","").replace(",",".")
+      }
       createClient(
         {
           name,
@@ -51,7 +57,7 @@ export function ModalRegisterEquipmentEntry() {
             street,
             number,
           },
-          loan: [{ value_loan: +value_loan, interest_rate: +interest_rate }],
+          loan: [{ value_loan: convertValue(value_loan), interest_rate: +interest_rate }],
         } as ICreateClientePost,
         session?.accessToken as string
       );
@@ -69,6 +75,9 @@ export function ModalRegisterEquipmentEntry() {
       );
     }
   };
+
+  console.log(watch("value_loan"));
+
   return (
     <>
       <ModalContainer
@@ -135,13 +144,32 @@ export function ModalRegisterEquipmentEntry() {
             nameField="number"
           />
           {/* make a array of loan value */}
-          <Input
+          {/* <Input
             label="Valor do emprestimo"
             control={control}
             errors={errors.value_loan?.message}
             nameField="value_loan"
             type="text"
             // add R$  before value input
+          /> */}
+          <Controller
+            control={control}
+            name="value_loan"
+            render={({ field }) => (
+          <NumericFormat
+            label="Valor do emprestimo"
+            helperText={errors.value_loan?.message}
+            FormHelperTextProps={{ error: !!errors.value_loan?.message }}
+            prefix={"R$ "} // add R$  before value input'
+            thousandSeparator="."
+            decimalSeparator=","
+            decimalScale={2}
+            fixedDecimalScale
+            {...field}
+            
+          customInput={TextField}
+          />
+            )}
           />
           <Input
             label="Juros em %"
