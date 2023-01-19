@@ -6,7 +6,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { Entrys } from "../../entrys";
 import { Exits } from "../../exits";
 
-export function TabComponent({ session }: { session: any }) {
+export function TabComponent() {
   const [value, setValue] = React.useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -18,7 +18,7 @@ export function TabComponent({ session }: { session: any }) {
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={value}>
           <TabPanel value="1">
-            <Entrys session={session} />
+            <Entrys />
           </TabPanel>
           {/* <TabPanel value="2">
             <Exits />

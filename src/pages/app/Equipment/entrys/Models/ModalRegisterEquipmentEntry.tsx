@@ -7,6 +7,7 @@ import { NumericFormat } from "react-number-format";
 
 import { ModalContainer } from "../../../../../components/ModalContainer";
 import Input from "../../../../../components/TextField";
+import { InputMask } from "../../../../../components/TextField/mask";
 import { createClient } from "../../../../../services/client";
 
 import { useModal } from "../../../../../shared/hooks/useModal";
@@ -45,8 +46,12 @@ export function ModalRegisterEquipmentEntry() {
     } = data;
     try {
       const convertValue = (value: number) => {
-       return +value.toString().replaceAll("R$ ","").replaceAll(".","").replace(",",".")
-      }
+        return +value
+          .toString()
+          .replaceAll("R$ ", "")
+          .replaceAll(".", "")
+          .replace(",", ".");
+      };
       createClient(
         {
           name,
@@ -57,7 +62,12 @@ export function ModalRegisterEquipmentEntry() {
             street,
             number,
           },
-          loan: [{ value_loan: convertValue(value_loan), interest_rate: +interest_rate }],
+          loan: [
+            {
+              value_loan: convertValue(value_loan),
+              interest_rate: +interest_rate,
+            },
+          ],
         } as ICreateClientePost,
         session?.accessToken as string
       );
@@ -152,24 +162,29 @@ export function ModalRegisterEquipmentEntry() {
             type="text"
             // add R$  before value input
           /> */}
-          <Controller
-            control={control}
-            name="value_loan"
-            render={({ field }) => (
-          <NumericFormat
+          {/* {newFunction(control, errors)} */}
+          <InputMask
             label="Valor do emprestimo"
-            helperText={errors.value_loan?.message}
-            FormHelperTextProps={{ error: !!errors.value_loan?.message }}
-            prefix={"R$ "} // add R$  before value input'
+            control={control}
+            errors={errors.value_loan?.message}
+            name="value_loan"
+            prefix="R$ "
             thousandSeparator="."
             decimalSeparator=","
             decimalScale={2}
             fixedDecimalScale
-            {...field}
-            
-          customInput={TextField}
+            fullWidth
           />
-            )}
+          <InputMask
+            label="Juros em %"
+            control={control}
+            errors={errors.interest_rate?.message}
+            name="interest_rate"
+            suffix="%"
+            decimalSeparator=","
+            decimalScale={2}
+            fixedDecimalScale
+            fullWidth
           />
           <Input
             label="Juros em %"

@@ -13,7 +13,7 @@ export default function Equipaments({
   return (
     <>
       <DefaultLayout>
-        <TabComponent session={session} />
+        <TabComponent />
       </DefaultLayout>
     </>
   );
