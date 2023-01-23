@@ -14,6 +14,7 @@ import { ModalPrintReceipt } from "./Models/ModalPrintReceipt";
 import { api } from "../../../../services/api";
 import { getAllClients } from "../../../../services/client";
 import { useSession } from "next-auth/react";
+import { ModalRegisterLoan } from "./Models/ModalRegisterLoan";
 
 export interface ClientProps {
   id: string;
@@ -48,11 +49,13 @@ export function Entrys() {
     exit: boolean;
     view: boolean;
     print: boolean;
+    loan: boolean;
   }>({
     entry: false,
     exit: false,
     view: false,
     print: false,
+    loan: false,
   });
   const [id, setId] = useState<string>("");
   const { data: session } = useSession();
@@ -155,28 +158,28 @@ export function Entrys() {
   // }, []);
 
   const handleOpenModalEntry = () => {
-    setType({ entry: true, exit: false, view: false, print: false });
+    setType({ entry: true, exit: false, view: false, print: false, loan: false });
     setOpen(true);
   };
 
   const handleOpenModalExit = (idClient: string) => {
-    setType({ entry: false, exit: true, view: false, print: false });
+    setType({ entry: false, exit: true, view: false, print: false, loan: false });
     setOpen(true);
     setId(idClient);
   };
 
   const handleOpenModalView = () => {
-    setType({ entry: false, exit: false, view: true, print: false });
+    setType({ entry: false, exit: false, view: true, print: false, loan: false });
     setOpen(true);
   };
 
   const handleOpenModalPrint = () => {
-    setType({ entry: false, exit: false, view: false, print: true });
+    setType({ entry: false, exit: false, view: false, print: true, loan: false });
     setOpen(true);
   };
 
   const handleOpenLoan = (idClient: string) => {
-    setType({ entry: false, exit: true, view: false, print: false });
+    setType({ entry: false, exit: false, view: false, print: false, loan: true });
     setOpen(true);
     setId(idClient);
   };
@@ -215,6 +218,7 @@ export function Entrys() {
       )}
       {type.view && <ModalRegisterEquipment />}
       {type.print && <ModalPrintReceipt />}
+
     </>
   );
 }
