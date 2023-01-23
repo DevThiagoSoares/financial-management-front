@@ -175,6 +175,13 @@ export function Entrys() {
     setOpen(true);
   };
 
+  const handleOpenLoan = (idClient: string) => {
+    setType({ entry: false, exit: true, view: false, print: false });
+    setOpen(true);
+    setId(idClient);
+  };
+  
+
   return (
     <>
       <Box

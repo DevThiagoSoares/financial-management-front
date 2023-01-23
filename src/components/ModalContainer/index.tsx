@@ -7,6 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Typography from "@mui/material/Typography";
 import { colors } from "../../shared/themes";
 import { Dialog, DialogProps } from "@mui/material";
+import { Widgets } from "@mui/icons-material";
 
 interface ModalContainerProps extends DialogProps {
   open: boolean;
@@ -38,6 +39,7 @@ export function ModalContainer({
             padding: "2.5rem 2.5rem 0 2.5rem",
             color: colors.primary_base,
             fontSize: "1.25rem",
+            width: "1000px"
           }}
         >
           {title}
