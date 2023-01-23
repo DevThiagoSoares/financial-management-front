@@ -106,6 +106,7 @@ export function ModalRegisterExit({
 
   return (
     <>
+
       <ModalContainer
         open={open}
         setOpen={setOpen}
@@ -113,7 +114,15 @@ export function ModalRegisterExit({
         subtitle="Preencha as informações para registrar pagamento."
         maxWidth="xl"
         actions={false}
+        
       >
+                  <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleOpenLoan(param.row.id)}
+            >
+              Registrar Pagamento
+            </Button>
         {/* <TableGrid rows={rows} columns={columns} /> */}
         <Box
           sx={{
@@ -122,6 +131,7 @@ export function ModalRegisterExit({
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
+            
             // height: "calc(100vh - 348px)",
 
             height: "calc(100vh - 348px)",
