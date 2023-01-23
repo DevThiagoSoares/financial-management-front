@@ -21,3 +21,11 @@ export async function getAllClients(token: string): Promise<any> {
     },
   });
 }
+
+export async function getClient(token: string, id: string): Promise<any> {
+  return await api.get("/api/client/" + id, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}

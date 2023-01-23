@@ -15,7 +15,7 @@ import { api } from "../../../../services/api";
 import { getAllClients } from "../../../../services/client";
 import { useSession } from "next-auth/react";
 
-interface ClientProps {
+export interface ClientProps {
   id: string;
   name: string;
   fone: string;
@@ -54,6 +54,7 @@ export function Entrys() {
     view: false,
     print: false,
   });
+  const [id, setId] = useState<string>("");
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -87,21 +88,28 @@ export function Entrys() {
     {
       field: "name",
       headerName: "Nome",
+      headerAlign: "center",
     },
     {
       field: "data",
       headerName: "Data do Emprestimo",
+      headerAlign: "center",
     },
     {
       field: "dataFinal",
       headerName: "Data do Pagamento",
+      headerAlign: "center",
     },
     {
       field: "value_loan",
       renderCell: (param) => {
-        return param.row.loan[0].value_loan;
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(param.row.total);
       },
       headerName: "Valor Emprestado",
+      headerAlign: "center",
     },
     {
       field: "interest_rate",
@@ -109,10 +117,36 @@ export function Entrys() {
         return param.row.loan[0].interest_rate + "%";
       },
       headerName: "Juros Aplicado",
+      headerAlign: "center",
     },
     {
       field: "pagar",
       headerName: "Valor a Pagar",
+      headerAlign: "center",
+      renderCell: (param) => {
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(param.row.pagar);
+      },
+    },
+    {
+      field: "actions",
+      headerName: "Ações",
+      headerAlign: "center",
+      renderCell: (param) => {
+        return (
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleOpenModalExit(param.row.id)}
+            >
+              Registrar Pagamento
+            </Button>
+          </>
+        );
+      },
     },
   ];
 
@@ -125,9 +159,10 @@ export function Entrys() {
     setOpen(true);
   };
 
-  const handleOpenModalExit = () => {
+  const handleOpenModalExit = (idClient: string) => {
     setType({ entry: false, exit: true, view: false, print: false });
     setOpen(true);
+    setId(idClient);
   };
 
   const handleOpenModalView = () => {
@@ -148,7 +183,7 @@ export function Entrys() {
           justifyContent: "flex-end",
         }}
       >
-        <Search />
+        {/* <Search /> */}
         <Button
           size="medium"
           variant="contained"
@@ -159,15 +194,18 @@ export function Entrys() {
         </Button>
       </Box>
       <br />
+
       <TableGrid
         rows={rows}
         columns={columns}
-        exit={handleOpenModalExit}
+        // exit={handleOpenModalExit(rows.id)}
         view={handleOpenModalView}
         print={handleOpenModalPrint}
       />
       {type.entry && <ModalRegisterEquipmentEntry />}
-      {type.exit && <ModalRegisterExit />}
+      {type.exit && (
+        <ModalRegisterExit id={id} token={session?.accessToken as string} />
+      )}
       {type.view && <ModalRegisterEquipment />}
       {type.print && <ModalPrintReceipt />}
     </>

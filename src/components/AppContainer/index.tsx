@@ -54,14 +54,9 @@ export function AppContainer({ children }: AppContainerProps) {
             >
               <MenuIcon color="primary" />
             </IconButton>
-            <img src={LogoCore} alt="Logo do Core" />
+            {/* <img src={LogoCore} alt="Logo do Core" /> */}
             <Divider orientation="vertical" variant="middle" flexItem />
-            <Typography
-              color="secondary"
-              variant="body2"
-              noWrap
-              component="div"
-            >
+            <Typography color="primary" variant="body2" noWrap component="div">
               Financiero
             </Typography>
           </Box>

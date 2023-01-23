@@ -22,27 +22,27 @@ export function TableGrid({
   print,
 }: TableGridProps) {
   const actionColumn: GridColDef[] = [
-    {
-      field: "menu",
-      headerName: " ",
-      type: "string",
-      align: "right",
-      renderCell: (row: any) => (
-        <>
-          <Box sx={{ mx: "auto", width: "100" }}>
-            {/* <IconButton>
-              <DevicesIcon color="secondary" onClick={view} />
-            </IconButton>
-            <IconButton>
-              <PrintIcon color="secondary" onClick={print} />
-            </IconButton> */}
-            <Button onClick={exit} sx={{ border: 1 }}>
-              REGISTRO DE PAGAMENTO
-            </Button>
-          </Box>
-        </>
-      ),
-    },
+    // {
+    //   field: "menu",
+    //   headerName: " ",
+    //   type: "string",
+    //   align: "right",
+    //   renderCell: (row: any) => (
+    //     <>
+    //       <Box sx={{ mx: "auto", width: "100" }}>
+    //         {/* <IconButton>
+    //           <DevicesIcon color="secondary" onClick={view} />
+    //         </IconButton>
+    //         <IconButton>
+    //           <PrintIcon color="secondary" onClick={print} />
+    //         </IconButton> */}
+    //         {/* <Button onClick={exit} sx={{ border: 1 }}>
+    //           REGISTRO DE PAGAMENTO
+    //         </Button> */}
+    //       </Box>
+    //     </>
+    //   ),
+    // },
   ];
 
   columns = [...columns, ...actionColumn];
@@ -52,11 +52,11 @@ export function TableGrid({
         rows={rows}
         pageSize={12}
         rowsPerPageOptions={[]}
-        disableColumnMenu
+        // disableColumnMenu
         columns={columns.map((column: GridColDef) => ({
           ...column,
           flex: 1,
-          sortable: false,
+          sortable: true,
           headerClassName: "super-app-theme--header",
         }))}
         sx={table}

@@ -55,7 +55,4 @@ export const createClientSchema = z.object({
     .string({ required_error: "Requerido" }),
   interest_rate: z
     .string({ required_error: "Requerido" })
-    .regex(new RegExp(/^[0-9]+$/), {
-      message: "A taxa de juros deve conter apenas números",
-    }),
 });

@@ -18,7 +18,7 @@ export default NextAuth({
         };
 
         const res = await axios.post(
-          `${process.env.SERVER_URL}/auth/login`,
+          `${process.env.NEXTAUTH_URL}/api/login`,
           { login: payload.login, password: payload.password },
           {
             headers: {
@@ -118,5 +118,5 @@ export default NextAuth({
     },
   },
   // log
-  debug: true,
+  debug: false,
 });

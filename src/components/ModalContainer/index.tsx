@@ -1,20 +1,20 @@
-import React from 'react'
-import Button from '@mui/material/Button'
+import React from "react";
+import Button from "@mui/material/Button";
 
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
-import Typography from '@mui/material/Typography'
-import { colors } from '../../shared/themes'
-import { Dialog, DialogProps } from '@mui/material'
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Typography from "@mui/material/Typography";
+import { colors } from "../../shared/themes";
+import { Dialog, DialogProps } from "@mui/material";
 
 interface ModalContainerProps extends DialogProps {
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  title: string
-  subtitle: string
-  actions?: boolean
-  children: React.ReactNode
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
+  subtitle: string;
+  actions?: boolean;
+  children: React.ReactNode;
 }
 
 export function ModalContainer({
@@ -27,30 +27,32 @@ export function ModalContainer({
   ...props
 }: ModalContainerProps) {
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <>
-      <Dialog onClose={handleClose} open={open} {...props}>
+      <Dialog onClose={handleClose} open={open} {...props} sx={{}}>
         <DialogTitle
           sx={{
-            padding: '2.5rem 2.5rem 0 2.5rem',
+            padding: "2.5rem 2.5rem 0 2.5rem",
             color: colors.primary_base,
-            fontSize: '1.25rem',
+            fontSize: "1.25rem",
           }}
         >
           {title}
           <Typography
-            sx={{ color: colors.neutral_dark, fontSize: '0.875rem' }}
+            sx={{ color: colors.neutral_dark, fontSize: "0.875rem" }}
             variant="subtitle1"
           >
             {subtitle}
           </Typography>
         </DialogTitle>
-        <DialogContent style={{ padding: '2.5rem' }}>{children}</DialogContent>
+        <DialogContent style={{ padding: "2.5rem", width: "100%" }}>
+          {children}
+        </DialogContent>
         {actions && (
-          <DialogActions sx={{ padding: '0 2.5rem 2.5rem 2.5rem' }}>
+          <DialogActions sx={{ padding: "0 2.5rem 2.5rem 2.5rem" }}>
             <Button variant="text" onClick={handleClose}>
               Cancelar
             </Button>
@@ -59,5 +61,5 @@ export function ModalContainer({
         )}
       </Dialog>
     </>
-  )
+  );
 }

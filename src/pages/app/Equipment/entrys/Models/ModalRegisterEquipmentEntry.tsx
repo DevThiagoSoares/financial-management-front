@@ -65,7 +65,10 @@ export function ModalRegisterEquipmentEntry() {
           loan: [
             {
               value_loan: convertValue(value_loan),
-              interest_rate: +interest_rate,
+              interest_rate: +(+interest_rate
+                .toString()
+                .replace(",", ".")
+                .replace("%", "") as number),
             },
           ],
         } as ICreateClientePost,
@@ -153,16 +156,6 @@ export function ModalRegisterEquipmentEntry() {
             errors={errors.number?.message}
             nameField="number"
           />
-          {/* make a array of loan value */}
-          {/* <Input
-            label="Valor do emprestimo"
-            control={control}
-            errors={errors.value_loan?.message}
-            nameField="value_loan"
-            type="text"
-            // add R$  before value input
-          /> */}
-          {/* {newFunction(control, errors)} */}
           <InputMask
             label="Valor do emprestimo"
             control={control}
@@ -185,14 +178,6 @@ export function ModalRegisterEquipmentEntry() {
             decimalScale={2}
             fixedDecimalScale
             fullWidth
-          />
-          <Input
-            label="Juros em %"
-            control={control}
-            errors={errors.interest_rate?.message}
-            nameField="interest_rate"
-            type="text"
-            // add R$  before value input
           />
           <Box
             sx={{

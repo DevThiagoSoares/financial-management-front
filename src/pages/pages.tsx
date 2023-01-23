@@ -7,7 +7,7 @@ import Equipaments from "../pages/app/Equipment";
 
 export const APP_PAGES = [
   {
-    title: "Visitantes",
+    title: "Clientes",
     route: "/app/Equipment",
     icon: <PeopleIcon />,
     component: <Visitors />,
@@ -18,13 +18,6 @@ export const APP_PAGES = [
     route: "/app/Schedule",
     icon: <EventIcon />,
     component: <Schedule />,
-    showMenu: true,
-  },
-  {
-    title: "Equipamentos",
-    route: "/app/Equipment",
-    icon: <DevicesIcon />,
-    component: <Equipaments />,
     showMenu: true,
   },
 ];

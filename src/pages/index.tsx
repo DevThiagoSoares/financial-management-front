@@ -63,7 +63,7 @@ export default function SignInSide() {
           login: data.login,
           password: data.password,
 
-          callbackUrl: `${window.location.origin}/app/Equipment`,
+          callbackUrl: `${window.location.origin}/app`,
         });
         // enqueueSnackbar("Login realizado com sucesso!", { variant: "success" });
       } catch (error) {
@@ -153,11 +153,11 @@ export default function SignInSide() {
                     Forgot password?
                   </Link> */}
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                   <Link href="/signup" variant="body2">
                     {"não tem uma conta? Cadastre-se"}
                   </Link>
-                </Grid>
+                </Grid> */}
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
