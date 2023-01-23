@@ -116,13 +116,13 @@ export function ModalRegisterExit({
         actions={false}
         
       >
-                  <Button
+                  {/* <Button
               variant="contained"
               color="primary"
               onClick={() => handleOpenLoan(param.row.id)}
             >
               Registrar Pagamento
-            </Button>
+            </Button> */}
         {/* <TableGrid rows={rows} columns={columns} /> */}
         <Box
           sx={{
