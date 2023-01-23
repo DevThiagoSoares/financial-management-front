@@ -8,6 +8,7 @@ import { getClient } from "../../../../../services/client";
 import { useModal } from "../../../../../shared/hooks/useModal";
 import { table, tableContainer } from "../../exits/TableGrid/styles";
 import { TableGrid } from "../TableGrid";
+import { ModalRegisterLoan } from "./ModalRegisterLoan";
 import { Teste } from "./teste";
 
 interface LoanProps {
@@ -103,6 +104,25 @@ export function ModalRegisterExit({
       },
     },
   ];
+  const [idLoan, setId] = useState<string>("");
+  const [type, setType] = useState<{
+    entry: boolean;
+    exit: boolean;
+    view: boolean;
+    print: boolean;
+    loan: boolean;
+  }>({
+    entry: false,
+    exit: false,
+    view: false,
+    print: false,
+    loan: false,
+  });
+  const handleOpenLoan = (idClient: string) => {
+    setType({ entry: false, exit: false, view: false, print: false, loan: true });
+    setOpen(true);
+    setId(idClient);
+  };
 
   return (
     <>
@@ -116,13 +136,13 @@ export function ModalRegisterExit({
         actions={false}
         
       >
-                  {/* <Button
+                  <Button
               variant="contained"
               color="primary"
-              onClick={() => handleOpenLoan(param.row.id)}
+              onClick={() => handleOpenLoan(id)}
             >
               Registrar Pagamento
-            </Button> */}
+            </Button>
         {/* <TableGrid rows={rows} columns={columns} /> */}
         <Box
           sx={{
@@ -152,6 +172,8 @@ export function ModalRegisterExit({
           />
         </Box>
       </ModalContainer>
+
+      {type.loan && <ModalRegisterLoan id={idLoan} />}
     </>
   );
 }

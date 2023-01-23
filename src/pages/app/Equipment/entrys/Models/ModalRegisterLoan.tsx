@@ -32,6 +32,8 @@ export function ModalRegisterLoan(id:string) {
     resolver: zodResolver(createClientSchema),
   });
 
+  console.log(id);
+  
   const { data: session } = useSession();
   const onSubmit = async (data: ICreateCliente) => {
     const {
@@ -81,7 +83,7 @@ export function ModalRegisterLoan(id:string) {
       closeModal();
     } catch (error) {
       enqueueSnackbar(
-        `${error?.message ?? "Ocorreu um erro ao cadastar o cliente"}`,
+        `"Ocorreu um erro ao cadastar o cliente"`,
         {
           variant: "error",
         }

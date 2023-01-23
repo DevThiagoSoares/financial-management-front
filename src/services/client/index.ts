@@ -28,11 +28,15 @@ export async function getClient(token: string, id: string): Promise<any> {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  export async function setLoan(token: string, id: string, payload: any): Promise<any> {
-    return await api.post("/api/load/" + id, payload,{
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+}
+export async function setLoan(
+  token: string,
+  id: string,
+  payload: any
+): Promise<any> {
+  return await api.post("/api/load/" + id, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
