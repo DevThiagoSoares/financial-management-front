@@ -51,8 +51,7 @@ export const createClientSchema = z.object({
   district: z.string({ required_error: "Requerido" }),
   number: z.string({ required_error: "Requerido" }),
   city: z.string({ required_error: "Requerido" }),
-  value_loan: z
-    .string({ required_error: "Requerido" }),
-  interest_rate: z
-    .string({ required_error: "Requerido" })
+  value_loan: z.string({ required_error: "Requerido" }),
+  interest_rate: z.string({ required_error: "Requerido" }),
+  dueDate: z.string({ required_error: "Requerido" }),
 });

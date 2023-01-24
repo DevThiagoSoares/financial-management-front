@@ -1,5 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { getSession, useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useForm, Controller } from "react-hook-form";
@@ -17,7 +24,7 @@ import {
 } from "../../../../../types/createCliente";
 import { createClientSchema } from "../../../../../utils/validation";
 
-export function ModalRegisterLoan(id:string) {
+export function ModalRegisterLoan(id: string) {
   const { open, setOpen, closeModal } = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -33,7 +40,7 @@ export function ModalRegisterLoan(id:string) {
   });
 
   console.log(id);
-  
+
   const { data: session } = useSession();
   const onSubmit = async (data: ICreateCliente) => {
     const {
@@ -82,12 +89,9 @@ export function ModalRegisterLoan(id:string) {
       });
       closeModal();
     } catch (error) {
-      enqueueSnackbar(
-        `"Ocorreu um erro ao cadastar o cliente"`,
-        {
-          variant: "error",
-        }
-      );
+      enqueueSnackbar(`"Ocorreu um erro ao cadastar o cliente"`, {
+        variant: "error",
+      });
     }
   };
 
@@ -122,42 +126,6 @@ export function ModalRegisterLoan(id:string) {
           }}
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Input
-            label="Nome"
-            control={control}
-            errors={errors.name?.message}
-            nameField="name"
-          />
-          <Input
-            label="Telefone"
-            control={control}
-            errors={errors.fone?.message}
-            nameField="fone"
-          />
-          <Input
-            label="Cidade"
-            control={control}
-            errors={errors.city?.message}
-            nameField="city"
-          />
-          <Input
-            label="Bairro"
-            control={control}
-            errors={errors.district?.message}
-            nameField="district"
-          />
-          <Input
-            label="Rua"
-            control={control}
-            errors={errors.street?.message}
-            nameField="street"
-          />
-          <Input
-            label="Numero"
-            control={control}
-            errors={errors.number?.message}
-            nameField="number"
-          />
           <InputMask
             label="Valor do emprestimo"
             control={control}
@@ -180,6 +148,17 @@ export function ModalRegisterLoan(id:string) {
             decimalScale={2}
             fixedDecimalScale
             fullWidth
+          />
+          <InputLabel id="dueDatel">Prazo de Pagamento</InputLabel>
+          <Controller
+            control={control}
+            name="dueDate"
+            render={({ field }) => (
+              <Select id="dueDatel" labelId="dueDatel" {...field}>
+                <MenuItem value="1 semana">1 semana</MenuItem>
+                <MenuItem value="1 mês">1 mês</MenuItem>
+              </Select>
+            )}
           />
           <Box
             sx={{

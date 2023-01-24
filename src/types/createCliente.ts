@@ -7,6 +7,7 @@ export interface ICreateCliente {
   city: string;
   value_loan: number;
   interest_rate: number;
+  dueDate: string;
 }
 export interface ICreateClientePost {
   name: string;
@@ -23,4 +24,5 @@ export interface ICreateClientePost {
 export interface Iloan {
   value_loan: number;
   interest_rate: number;
+  dueDate: string;
 }
