@@ -1,5 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { getSession, useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useForm, Controller } from "react-hook-form";
@@ -43,6 +50,7 @@ export function ModalRegisterEquipmentEntry() {
       name,
       number,
       street,
+      dueDate,
     } = data;
     try {
       const convertValue = (value: number) => {
@@ -69,6 +77,7 @@ export function ModalRegisterEquipmentEntry() {
                 .toString()
                 .replace(",", ".")
                 .replace("%", "") as number),
+              dueDate,
             },
           ],
         } as ICreateClientePost,
@@ -110,6 +119,7 @@ export function ModalRegisterEquipmentEntry() {
             gap: "1.5rem",
             gridTemplateAreas: `
               ". ."
+              "br br"
               "br br"
               "br br"
               "br br"
@@ -178,6 +188,17 @@ export function ModalRegisterEquipmentEntry() {
             decimalScale={2}
             fixedDecimalScale
             fullWidth
+          />
+          <InputLabel id="dueDatel">Prazo de Pagamento</InputLabel>
+          <Controller
+            control={control}
+            name="dueDate"
+            render={({ field }) => (
+              <Select id="dueDatel" labelId="dueDatel" {...field}>
+                <MenuItem value="1 semana">1 semana</MenuItem>
+                <MenuItem value="1 mês">1 mês</MenuItem>
+              </Select>
+            )}
           />
           <Box
             sx={{
