@@ -55,3 +55,9 @@ export const createClientSchema = z.object({
   interest_rate: z.string({ required_error: "Requerido" }),
   dueDate: z.string({ required_error: "Requerido" }),
 });
+
+export const createLoanSchema = z.object({
+  value_loan: z.string({ required_error: "Requerido" }),
+  interest_rate: z.string({ required_error: "Requerido" }),
+  dueDate: z.string({ required_error: "Requerido" }),
+});

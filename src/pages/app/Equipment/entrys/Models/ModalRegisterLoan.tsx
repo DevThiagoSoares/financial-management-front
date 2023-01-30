@@ -15,14 +15,18 @@ import { NumericFormat } from "react-number-format";
 import { ModalContainer } from "../../../../../components/ModalContainer";
 import Input from "../../../../../components/TextField";
 import { InputMask } from "../../../../../components/TextField/mask";
-import { createClient } from "../../../../../services/client";
+import { createClient, createLoan } from "../../../../../services/client";
 
 import { useModal } from "../../../../../shared/hooks/useModal";
 import {
   ICreateCliente,
   ICreateClientePost,
+  Iloan,
 } from "../../../../../types/createCliente";
-import { createClientSchema } from "../../../../../utils/validation";
+import {
+  createClientSchema,
+  createLoanSchema,
+} from "../../../../../utils/validation";
 
 export function ModalRegisterLoan(id: string) {
   const { open, setOpen, closeModal } = useModal();
@@ -35,24 +39,17 @@ export function ModalRegisterLoan(id: string) {
     register,
     watch,
     formState: { errors },
-  } = useForm<ICreateCliente>({
-    resolver: zodResolver(createClientSchema),
+  } = useForm<Iloan>({
+    resolver: zodResolver(createLoanSchema),
   });
 
   console.log(id);
 
   const { data: session } = useSession();
-  const onSubmit = async (data: ICreateCliente) => {
-    const {
-      city,
-      district,
-      fone,
-      value_loan,
-      interest_rate,
-      name,
-      number,
-      street,
-    } = data;
+  const onSubmit = async (data: Iloan) => {
+    console.log(data);
+
+    const { dueDate, value_loan, interest_rate } = data;
     try {
       const convertValue = (value: number) => {
         return +value
@@ -61,28 +58,15 @@ export function ModalRegisterLoan(id: string) {
           .replaceAll(".", "")
           .replace(",", ".");
       };
-      createClient(
-        {
-          name,
-          fone,
-          address: {
-            city,
-            district,
-            street,
-            number,
-          },
-          loan: [
-            {
-              value_loan: convertValue(value_loan),
-              interest_rate: +(+interest_rate
-                .toString()
-                .replace(",", ".")
-                .replace("%", "") as number),
-            },
-          ],
-        } as ICreateClientePost,
-        session?.accessToken as string
-      );
+
+      createLoan(session?.accessToken as string, id.id, {
+        value_loan: convertValue(value_loan),
+        interest_rate: +(+interest_rate
+          .toString()
+          .replace(",", ".")
+          .replace("%", "") as number),
+        dueDate,
+      } as any);
 
       enqueueSnackbar("Cliente cadastrado com sucesso", {
         variant: "success",
@@ -94,8 +78,6 @@ export function ModalRegisterLoan(id: string) {
       });
     }
   };
-
-  console.log(watch("value_loan"));
 
   return (
     <>
@@ -169,8 +151,12 @@ export function ModalRegisterLoan(id: string) {
             }}
           >
             <Button onClick={closeModal}>Cancelar</Button>
-            <Button variant="contained" type="submit">
-              REGISTRAR CLIENTE
+            <Button
+              variant="contained"
+              type="button"
+              onClick={handleSubmit(onSubmit)}
+            >
+              REGISTRAR FINANCIAMENTO
             </Button>
           </Box>{" "}
         </Box>

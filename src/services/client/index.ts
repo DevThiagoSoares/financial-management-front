@@ -1,7 +1,10 @@
+import { useSession, getSession } from "next-auth/react";
 import { ICreateCliente, ICreateClientePost } from "../../types/createCliente";
 import { ILogin } from "../../types/login";
 import { ISignUp } from "../../types/signup";
 import { api } from "../api";
+
+// const { data: session } = useSession();
 
 export async function createClient(
   data: ICreateClientePost,
@@ -29,14 +32,18 @@ export async function getClient(token: string, id: string): Promise<any> {
     },
   });
 }
-export async function setLoan(
+export async function createLoan(
   token: string,
   id: string,
   payload: any
 ): Promise<any> {
-  return await api.post("/api/load/" + id, payload, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return await api.post(
+    "/api/loan/" + id,
+    { ...payload },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 }
