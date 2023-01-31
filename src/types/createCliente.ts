@@ -26,3 +26,8 @@ export interface Iloan {
   interest_rate: number;
   dueDate: string;
 }
+
+export interface IPayment {
+  value: number;
+  dueDate: string;
+}

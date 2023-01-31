@@ -47,3 +47,18 @@ export async function createLoan(
     }
   );
 }
+export async function createPayment(
+  token: string,
+  paymentId: string,
+  payload: any
+): Promise<any> {
+  return await api.put(
+    "/api/loan/instalment/" + paymentId,
+    { ...payload },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}

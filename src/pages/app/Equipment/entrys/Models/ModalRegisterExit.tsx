@@ -9,6 +9,7 @@ import { useModal } from "../../../../../shared/hooks/useModal";
 import { table, tableContainer } from "../../exits/TableGrid/styles";
 import { TableGrid } from "../TableGrid";
 import { ModalRegisterLoan } from "./ModalRegisterLoan";
+import { ModalRegisterPayment } from "./ModalRegisterPayment";
 import { Teste } from "./teste";
 
 interface LoanProps {
@@ -103,30 +104,70 @@ export function ModalRegisterExit({
         return new Intl.DateTimeFormat("pt-BR").format(new Date(param.value));
       },
     },
+    {
+      field: "actions",
+      headerName: "Ações",
+      headerAlign: "center",
+      renderCell: (param) => {
+        return (
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleOpenLoanPayment(param.row.id)}
+            >
+              Registrar Pagamento
+            </Button>
+          </>
+        );
+      },
+    },
   ];
   const [idLoan, setId] = useState<string>("");
+  const [paymentId, setPaymentId] = useState<string>("");
   const [type, setType] = useState<{
     entry: boolean;
     exit: boolean;
     view: boolean;
     print: boolean;
     loan: boolean;
+    payment: boolean;
   }>({
     entry: false,
     exit: false,
     view: false,
     print: false,
     loan: false,
+    payment: false,
   });
   const handleOpenLoan = (idClient: string) => {
-    setType({ entry: false, exit: false, view: false, print: false, loan: true });
+    setType({
+      entry: false,
+      exit: false,
+      view: false,
+      print: false,
+      loan: true,
+      payment: false,
+    });
     setOpen(true);
     setId(idClient);
   };
+  const handleOpenLoanPayment = (paymentId: string) => {
+    setType({
+      entry: false,
+      exit: false,
+      view: false,
+      print: false,
+      loan: false,
+      payment: true,
+    });
+    setOpen(true);
+    setPaymentId(paymentId);
+  };
+  console.log(type);
 
   return (
     <>
-
       <ModalContainer
         open={open}
         setOpen={setOpen}
@@ -134,15 +175,20 @@ export function ModalRegisterExit({
         subtitle="Preencha as informações para registrar pagamento."
         maxWidth="xl"
         actions={false}
-        
       >
-                  <Button
-              variant="contained"
-              color="primary"
-              onClick={() => handleOpenLoan(id)}
-            >
-              Registrar Pagamento
-            </Button>
+        {type.payment && (
+          <ModalRegisterPayment
+            id={paymentId}
+            type={(open: any) => setType(open)}
+          />
+        )}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleOpenLoan(id)}
+        >
+          Registrar Pagamento
+        </Button>
         {/* <TableGrid rows={rows} columns={columns} /> */}
         <Box
           sx={{
@@ -151,7 +197,7 @@ export function ModalRegisterExit({
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            
+
             // height: "calc(100vh - 348px)",
 
             height: "calc(100vh - 348px)",
