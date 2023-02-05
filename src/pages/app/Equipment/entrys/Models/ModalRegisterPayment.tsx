@@ -34,7 +34,7 @@ import {
   createValueSchema,
 } from "../../../../../utils/validation";
 
-export function ModalRegisterPayment(id: string, type: any) {
+export function ModalRegisterPayment({id, modal}: {id: string, modal: () => void}) {
   const { open, setOpen, closeModal } = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -42,6 +42,7 @@ export function ModalRegisterPayment(id: string, type: any) {
     handleSubmit,
     control,
     reset,
+    resetField,
     register,
     watch,
     formState: { errors },
@@ -61,7 +62,7 @@ export function ModalRegisterPayment(id: string, type: any) {
           .replace(",", ".");
       };
 
-      createPayment(session?.accessToken as string, id.id, {
+      createPayment(session?.accessToken as string, id, {
         value: convertValue(value),
         dueDate,
       } as any);
@@ -70,13 +71,20 @@ export function ModalRegisterPayment(id: string, type: any) {
         variant: "success",
       });
       // closeModal();
-      type({ payment: false });
+      handleCancel()
     } catch (error) {
       enqueueSnackbar(`"Ocorreu um erro ao realizado o pagamento"`, {
         variant: "error",
       });
     }
   };
+
+
+  const handleCancel = () => {
+    resetField("value");
+    resetField("dueDate");
+    modal()
+    };
 
   return (
     <>
@@ -137,7 +145,7 @@ export function ModalRegisterPayment(id: string, type: any) {
               gap: "0.5rem",
             }}
           >
-            <Button onClick={closeModal}>Cancelar</Button>
+            <Button onClick={handleCancel}>Cancelar</Button>
             <Button
               variant="contained"
               type="button"

@@ -28,7 +28,7 @@ import {
   createLoanSchema,
 } from "../../../../../utils/validation";
 
-export function ModalRegisterLoan(id: string) {
+export function ModalRegisterLoan({id, modal}: {id: string, modal: () => void}) {
   const { open, setOpen, closeModal } = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -37,6 +37,7 @@ export function ModalRegisterLoan(id: string) {
     control,
     reset,
     register,
+    resetField,
     watch,
     formState: { errors },
   } = useForm<Iloan>({
@@ -44,6 +45,13 @@ export function ModalRegisterLoan(id: string) {
   });
 
   console.log(id);
+
+  const handleCancel = () => {
+    resetField("value_loan");
+    resetField("interest_rate");
+    resetField("dueDate");
+    modal()
+    };
 
   const { data: session } = useSession();
   const onSubmit = async (data: Iloan) => {
@@ -59,7 +67,7 @@ export function ModalRegisterLoan(id: string) {
           .replace(",", ".");
       };
 
-      createLoan(session?.accessToken as string, id.id, {
+      createLoan(session?.accessToken as string, id, {
         value_loan: convertValue(value_loan),
         interest_rate: +(+interest_rate
           .toString()
@@ -71,7 +79,13 @@ export function ModalRegisterLoan(id: string) {
       enqueueSnackbar("Cliente cadastrado com sucesso", {
         variant: "success",
       });
-      closeModal();
+      
+      resetField("value_loan");
+      resetField("interest_rate");
+      resetField("dueDate");
+      modal();
+      // closeModal();
+      // reset();
     } catch (error) {
       enqueueSnackbar(`"Ocorreu um erro ao cadastar o cliente"`, {
         variant: "error",
@@ -150,7 +164,7 @@ export function ModalRegisterLoan(id: string) {
               gap: "0.5rem",
             }}
           >
-            <Button onClick={closeModal}>Cancelar</Button>
+            <Button onClick={handleCancel}>Cancelar</Button>
             <Button
               variant="contained"
               type="button"

@@ -58,6 +58,7 @@ export function Entrys() {
     loan: false,
   });
   const [id, setId] = useState<string>("");
+  const [updateRows, setUpdateRows] = useState<boolean>(false);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export function Entrys() {
       }
     }
     func();
-  }, [session.accessToken]);
+  }, [session.accessToken, updateRows]);
 
   // const responseData: ClientProps[] = [
   //   // {
@@ -183,6 +184,10 @@ export function Entrys() {
     setOpen(true);
     setId(idClient);
   };
+
+  const handleOpenCancel = () => {
+    setUpdateRows(!updateRows);
+  };
   
 
   return (
@@ -212,9 +217,11 @@ export function Entrys() {
         view={handleOpenModalView}
         print={handleOpenModalPrint}
       />
-      {type.entry && <ModalRegisterEquipmentEntry />}
+      {type.entry && <ModalRegisterEquipmentEntry         ontoggle={handleOpenCancel} />}
       {type.exit && (
-        <ModalRegisterExit id={id} token={session?.accessToken as string} />
+        <ModalRegisterExit id={id} token={session?.accessToken as string} 
+
+        />
       )}
       {type.view && <ModalRegisterEquipment />}
       {type.print && <ModalPrintReceipt />}

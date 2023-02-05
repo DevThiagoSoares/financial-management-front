@@ -24,7 +24,7 @@ import {
 } from "../../../../../types/createCliente";
 import { createClientSchema } from "../../../../../utils/validation";
 
-export function ModalRegisterEquipmentEntry() {
+export function ModalRegisterEquipmentEntry({ontoggle}:{ontoggle: () => void}) {
   const { open, setOpen, closeModal } = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -32,12 +32,26 @@ export function ModalRegisterEquipmentEntry() {
     handleSubmit,
     control,
     reset,
+    resetField,
     register,
     watch,
     formState: { errors },
   } = useForm<ICreateCliente>({
     resolver: zodResolver(createClientSchema),
   });
+
+  const handleCancel = () => {
+    resetField("name");
+    resetField("fone");
+    resetField("city");
+    resetField("district");
+    resetField("street");
+    resetField("number");
+    resetField("value_loan");
+    resetField("interest_rate");
+    resetField("dueDate");
+    ontoggle();
+  };
 
   const { data: session } = useSession();
   const onSubmit = async (data: ICreateCliente) => {
@@ -83,6 +97,7 @@ export function ModalRegisterEquipmentEntry() {
         } as ICreateClientePost,
         session?.accessToken as string
       );
+      handleCancel();
 
       enqueueSnackbar("Cliente cadastrado com sucesso", {
         variant: "success",

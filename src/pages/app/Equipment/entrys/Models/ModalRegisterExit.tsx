@@ -35,7 +35,32 @@ export function ModalRegisterExit({
 }) {
   const { open, setOpen, closeModal } = useModal();
   const [rows, setRows] = useState<LoanProps[]>([]);
-
+  const [type, setType] = useState<{
+    entry: boolean;
+    exit: boolean;
+    view: boolean;
+    print: boolean;
+    loan: boolean;
+    payment: boolean;
+  }>({
+    entry: false,
+    exit: false,
+    view: false,
+    print: false,
+    loan: false,
+    payment: false,
+  });
+  const handleModal = () => {
+    setType({
+      entry: false,
+      exit: false,
+      view: false,
+      print: false,
+      loan: false,
+      payment: false,
+    });
+    
+  };
   useEffect(() => {
     async function data() {
       const response = await getClient(token, id);
@@ -43,7 +68,7 @@ export function ModalRegisterExit({
     }
     data();
     console.log(rows);
-  }, [id]);
+  }, [id, type]);
 
   const columns: GridColDef[] = [
     {
@@ -125,21 +150,7 @@ export function ModalRegisterExit({
   ];
   const [idLoan, setId] = useState<string>("");
   const [paymentId, setPaymentId] = useState<string>("");
-  const [type, setType] = useState<{
-    entry: boolean;
-    exit: boolean;
-    view: boolean;
-    print: boolean;
-    loan: boolean;
-    payment: boolean;
-  }>({
-    entry: false,
-    exit: false,
-    view: false,
-    print: false,
-    loan: false,
-    payment: false,
-  });
+
   const handleOpenLoan = (idClient: string) => {
     setType({
       entry: false,
@@ -164,7 +175,8 @@ export function ModalRegisterExit({
     setOpen(true);
     setPaymentId(paymentId);
   };
-  console.log(type);
+
+  
 
   return (
     <>
@@ -179,7 +191,7 @@ export function ModalRegisterExit({
         {type.payment && (
           <ModalRegisterPayment
             id={paymentId}
-            type={(open: any) => setType(open)}
+            modal={handleModal}
           />
         )}
         <Button
@@ -219,7 +231,7 @@ export function ModalRegisterExit({
         </Box>
       </ModalContainer>
 
-      {type.loan && <ModalRegisterLoan id={idLoan} />}
+      {type.loan && <ModalRegisterLoan id={idLoan} modal={handleModal} />}
     </>
   );
 }
