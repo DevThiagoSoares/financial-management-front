@@ -19,6 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import Input from "../components/TextField";
+import axios from "axios";
 
 function Copyright(props: any) {
   return (
@@ -29,7 +30,7 @@ function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://google.com/">
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
@@ -56,23 +57,31 @@ export default function SignInSide() {
     console.log("data", data);
 
     const isValidate = await loginSchema.parse(data);
-
     if (isValidate) {
-      try {
-        const res = await signIn("credentials", {
-          login: data.login,
-          password: data.password,
 
-          callbackUrl: `${window.location.origin}/app`,
-        });
-        // enqueueSnackbar("Login realizado com sucesso!", { variant: "success" });
-      } catch (error) {
-        enqueueSnackbar("Email ou senha inválidos", {
-          variant: "error",
-          transitionDuration: { appear: 50000 },
-          autoHideDuration: 1000,
-        });
-      }
+    await axios.post('/api/auth/login', data).then(async () => {
+
+      enqueueSnackbar("Login realizado com sucesso", {
+        variant: "success",
+        transitionDuration: { appear: 50000 },
+        autoHideDuration: 1000,
+      });
+     await signIn("credentials", {
+        login: data.login,
+        password: data.password,
+  
+        callbackUrl: `${window.location.origin}/app`,
+      });
+    }).catch((err) => {
+      enqueueSnackbar("Email ou senha inválidos", {
+        variant: "error",
+        transitionDuration: { appear: 50000 },
+        autoHideDuration: 1000,
+      });
+    })
+
+
+     
     }
   };
 
