@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Button,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -28,7 +29,13 @@ import {
   createLoanSchema,
 } from "../../../../../utils/validation";
 
-export function ModalRegisterLoan({id, modal}: {id: string, modal: () => void}) {
+export function ModalRegisterLoan({
+  id,
+  modal,
+}: {
+  id: string;
+  modal: () => void;
+}) {
   const { open, setOpen, closeModal } = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -50,8 +57,8 @@ export function ModalRegisterLoan({id, modal}: {id: string, modal: () => void}) 
     resetField("value_loan");
     resetField("interest_rate");
     resetField("dueDate");
-    modal()
-    };
+    modal();
+  };
 
   const { data: session } = useSession();
   const onSubmit = async (data: Iloan) => {
@@ -76,10 +83,10 @@ export function ModalRegisterLoan({id, modal}: {id: string, modal: () => void}) 
         dueDate,
       } as any);
 
-      enqueueSnackbar("Cliente cadastrado com sucesso", {
+      enqueueSnackbar("Emprestimo cadastrado com sucesso", {
         variant: "success",
       });
-      
+
       resetField("value_loan");
       resetField("interest_rate");
       resetField("dueDate");
@@ -87,7 +94,7 @@ export function ModalRegisterLoan({id, modal}: {id: string, modal: () => void}) 
       // closeModal();
       // reset();
     } catch (error) {
-      enqueueSnackbar(`"Ocorreu um erro ao cadastar o cliente"`, {
+      enqueueSnackbar("Ocorreu um erro ao cadastar o Emprestimo", {
         variant: "error",
       });
     }
@@ -145,15 +152,35 @@ export function ModalRegisterLoan({id, modal}: {id: string, modal: () => void}) 
             fixedDecimalScale
             fullWidth
           />
-          <InputLabel id="dueDatel">Prazo de Pagamento</InputLabel>
           <Controller
             control={control}
             name="dueDate"
             render={({ field }) => (
-              <Select id="dueDatel" labelId="dueDatel" {...field}>
-                <MenuItem value="1 semana">1 semana</MenuItem>
-                <MenuItem value="1 mês">1 mês</MenuItem>
-              </Select>
+              <>
+                <Select
+                  id="dueDatel"
+                  label="Prazo de Pagamento"
+                  labelId="dueDatelId"
+                  defaultValue="Prazo de Pagamento"
+                  {...field}
+                >
+                  <MenuItem value={"Prazo de Pagamento"}>
+                    Prazo de Pagamento
+                  </MenuItem>
+                  <MenuItem value="1 semana">1 semana</MenuItem>
+                  <MenuItem value="1 mês">1 mês</MenuItem>
+                </Select>
+                {errors.dueDate?.message && (
+                  <FormHelperText
+                    sx={{
+                      color: "red",
+                    }}
+                  >
+                    {" "}
+                    {errors.dueDate.message}{" "}
+                  </FormHelperText>
+                )}
+              </>
             )}
           />
           <Box

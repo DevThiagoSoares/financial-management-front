@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Button,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -34,7 +35,13 @@ import {
   createValueSchema,
 } from "../../../../../utils/validation";
 
-export function ModalRegisterPayment({id, modal}: {id: string, modal: () => void}) {
+export function ModalRegisterPayment({
+  id,
+  modal,
+}: {
+  id: string;
+  modal: () => void;
+}) {
   const { open, setOpen, closeModal } = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -71,7 +78,7 @@ export function ModalRegisterPayment({id, modal}: {id: string, modal: () => void
         variant: "success",
       });
       // closeModal();
-      handleCancel()
+      handleCancel();
     } catch (error) {
       enqueueSnackbar(`"Ocorreu um erro ao realizado o pagamento"`, {
         variant: "error",
@@ -79,12 +86,11 @@ export function ModalRegisterPayment({id, modal}: {id: string, modal: () => void
     }
   };
 
-
   const handleCancel = () => {
     resetField("value");
     resetField("dueDate");
-    modal()
-    };
+    modal();
+  };
 
   return (
     <>
@@ -131,10 +137,31 @@ export function ModalRegisterPayment({id, modal}: {id: string, modal: () => void
             control={control}
             name="dueDate"
             render={({ field }) => (
-              <Select id="dueDatel" label="Prazo de Pagamento" {...field}>
-                <MenuItem value="1 semana">1 semana</MenuItem>
-                <MenuItem value="1 mês">1 mês</MenuItem>
-              </Select>
+              <>
+                <Select
+                  id="dueDatel"
+                  label="Prazo de Pagamento"
+                  labelId="dueDatelId"
+                  defaultValue="Prazo de Pagamento"
+                  {...field}
+                >
+                  <MenuItem value={"Prazo de Pagamento"}>
+                    Prazo de Pagamento
+                  </MenuItem>
+                  <MenuItem value="1 semana">1 semana</MenuItem>
+                  <MenuItem value="1 mês">1 mês</MenuItem>
+                </Select>
+                {errors.dueDate?.message && (
+                  <FormHelperText
+                    sx={{
+                      color: "red",
+                    }}
+                  >
+                    {" "}
+                    {errors.dueDate.message}{" "}
+                  </FormHelperText>
+                )}
+              </>
             )}
           />
           <Box

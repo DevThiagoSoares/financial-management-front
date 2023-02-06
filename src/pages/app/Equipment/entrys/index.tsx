@@ -71,23 +71,6 @@ export function Entrys() {
     func();
   }, [session.accessToken, updateRows]);
 
-  // const responseData: ClientProps[] = [
-  //   // {
-  //   //   id: ,
-  //   //   name: "Adriane Lavareda de Almeida",
-  //   //   entryDate: "20/07/2022 15:14",
-  //   //   departureDate: "20/07/2022 15:14",
-  //   //   foto: "https://mui.com/static/images/avatar/7.jpg",
-  //   // },
-  //   // {
-  //   //   id: "2",
-  //   //   entryDate: "20/07/2022 15:14",
-  //   //   departureDate: "20/07/2022 15:14",
-  //   //   name: "Adriano Pinto de Souza",
-  //   //   foto: "https://mui.com/static/images/avatar/6.jpg",
-  //   // },
-  // ];
-
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -146,7 +129,7 @@ export function Entrys() {
               color="primary"
               onClick={() => handleOpenModalExit(param.row.id)}
             >
-              Registrar Pagamento
+              Ver
             </Button>
           </>
         );
@@ -159,28 +142,58 @@ export function Entrys() {
   // }, []);
 
   const handleOpenModalEntry = () => {
-    setType({ entry: true, exit: false, view: false, print: false, loan: false });
+    setType({
+      entry: true,
+      exit: false,
+      view: false,
+      print: false,
+      loan: false,
+    });
     setOpen(true);
   };
 
   const handleOpenModalExit = (idClient: string) => {
-    setType({ entry: false, exit: true, view: false, print: false, loan: false });
+    setType({
+      entry: false,
+      exit: true,
+      view: false,
+      print: false,
+      loan: false,
+    });
     setOpen(true);
     setId(idClient);
   };
 
   const handleOpenModalView = () => {
-    setType({ entry: false, exit: false, view: true, print: false, loan: false });
+    setType({
+      entry: false,
+      exit: false,
+      view: true,
+      print: false,
+      loan: false,
+    });
     setOpen(true);
   };
 
   const handleOpenModalPrint = () => {
-    setType({ entry: false, exit: false, view: false, print: true, loan: false });
+    setType({
+      entry: false,
+      exit: false,
+      view: false,
+      print: true,
+      loan: false,
+    });
     setOpen(true);
   };
 
   const handleOpenLoan = (idClient: string) => {
-    setType({ entry: false, exit: false, view: false, print: false, loan: true });
+    setType({
+      entry: false,
+      exit: false,
+      view: false,
+      print: false,
+      loan: true,
+    });
     setOpen(true);
     setId(idClient);
   };
@@ -188,7 +201,6 @@ export function Entrys() {
   const handleOpenCancel = () => {
     setUpdateRows(!updateRows);
   };
-  
 
   return (
     <>
@@ -217,15 +229,14 @@ export function Entrys() {
         view={handleOpenModalView}
         print={handleOpenModalPrint}
       />
-      {type.entry && <ModalRegisterEquipmentEntry         ontoggle={handleOpenCancel} />}
+      {type.entry && (
+        <ModalRegisterEquipmentEntry ontoggle={handleOpenCancel} />
+      )}
       {type.exit && (
-        <ModalRegisterExit id={id} token={session?.accessToken as string} 
-
-        />
+        <ModalRegisterExit id={id} token={session?.accessToken as string} />
       )}
       {type.view && <ModalRegisterEquipment />}
       {type.print && <ModalPrintReceipt />}
-
     </>
   );
 }

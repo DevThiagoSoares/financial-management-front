@@ -8,6 +8,7 @@ import { getClient } from "../../../../../services/client";
 import { useModal } from "../../../../../shared/hooks/useModal";
 import { table, tableContainer } from "../../exits/TableGrid/styles";
 import { TableGrid } from "../TableGrid";
+import { ModalFullPay } from "./ModalFullPay";
 import { ModalRegisterLoan } from "./ModalRegisterLoan";
 import { ModalRegisterPayment } from "./ModalRegisterPayment";
 import { Teste } from "./teste";
@@ -42,6 +43,7 @@ export function ModalRegisterExit({
     print: boolean;
     loan: boolean;
     payment: boolean;
+    full: boolean;
   }>({
     entry: false,
     exit: false,
@@ -49,6 +51,7 @@ export function ModalRegisterExit({
     print: false,
     loan: false,
     payment: false,
+    full: false,
   });
   const handleModal = () => {
     setType({
@@ -58,8 +61,8 @@ export function ModalRegisterExit({
       print: false,
       loan: false,
       payment: false,
+      full: false,
     });
-    
   };
   useEffect(() => {
     async function data() {
@@ -75,7 +78,7 @@ export function ModalRegisterExit({
       field: "interest_rate",
       headerName: "Taxa de Juros",
       width: 100,
-      align: "center",
+      align: "left",
       renderCell: (params) => {
         return params.value + "%";
       },
@@ -84,7 +87,7 @@ export function ModalRegisterExit({
       field: "value_loan",
       headerName: "Valor do Empréstimo",
       width: 100,
-      align: "center",
+      align: "left",
       renderCell: (param) => {
         return new Intl.NumberFormat("pt-BR", {
           style: "currency",
@@ -92,23 +95,23 @@ export function ModalRegisterExit({
         }).format(param.value);
       },
     },
-    // {
-    //   field: "rest_loan",
-    //   headerName: "Valor Restante",
-    //   width: 100,
-    // align: "center",
-    //   renderCell: (param) => {
-    //     return new Intl.NumberFormat("pt-BR", {
-    //       style: "currency",
-    //       currency: "BRL",
-    //     }).format(param.value);
-    //   },
-    // },
+    {
+      field: "rest_loan",
+      headerName: "Valor Restante",
+      width: 100,
+      align: "left",
+      renderCell: (param) => {
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(param.value);
+      },
+    },
     {
       field: "payment_settled",
       headerName: "Pagamento Quitado",
       width: 100,
-      align: "center",
+      align: "left",
       renderCell: (param) => {
         return param.value ? "Sim" : "Não";
       },
@@ -117,7 +120,7 @@ export function ModalRegisterExit({
       field: "startDate",
       headerName: "Data de Início",
       width: 100,
-      align: "center",
+      align: "left",
       renderCell: (param) => {
         return new Intl.DateTimeFormat("pt-BR").format(new Date(param.value));
       },
@@ -132,10 +135,17 @@ export function ModalRegisterExit({
     {
       field: "actions",
       headerName: "Ações",
-      headerAlign: "center",
+      headerAlign: "left",
       renderCell: (param) => {
         return (
           <>
+            <Button
+              variant="contained"
+              color="info"
+              onClick={() => handleOpenFullPay(param.row.id)}
+            >
+              Pagar a divida
+            </Button>
             <Button
               variant="contained"
               color="primary"
@@ -163,6 +173,7 @@ export function ModalRegisterExit({
     setOpen(true);
     setId(idClient);
   };
+
   const handleOpenLoanPayment = (paymentId: string) => {
     setType({
       entry: false,
@@ -176,23 +187,32 @@ export function ModalRegisterExit({
     setPaymentId(paymentId);
   };
 
-  
+  const handleOpenFullPay = (paymentId: string) => {
+    setType({
+      entry: false,
+      exit: false,
+      view: false,
+      print: false,
+      loan: false,
+      payment: false,
+      full: true,
+    });
+
+    setId(paymentId);
+  };
 
   return (
     <>
       <ModalContainer
         open={open}
         setOpen={setOpen}
-        title="Registrar pagamento"
+        title="Adicionar Empréstimo"
         subtitle="Preencha as informações para registrar pagamento."
         maxWidth="xl"
         actions={false}
       >
         {type.payment && (
-          <ModalRegisterPayment
-            id={paymentId}
-            modal={handleModal}
-          />
+          <ModalRegisterPayment id={paymentId} modal={handleModal} />
         )}
         <Button
           variant="contained"
@@ -201,6 +221,7 @@ export function ModalRegisterExit({
         >
           Registrar Pagamento
         </Button>
+
         {/* <TableGrid rows={rows} columns={columns} /> */}
         <Box
           sx={{
@@ -208,7 +229,7 @@ export function ModalRegisterExit({
             flex: 1,
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: "left",
 
             // height: "calc(100vh - 348px)",
 
@@ -232,6 +253,7 @@ export function ModalRegisterExit({
       </ModalContainer>
 
       {type.loan && <ModalRegisterLoan id={idLoan} modal={handleModal} />}
+      {type.full && <ModalFullPay id={idLoan} modal={handleModal} />}
     </>
   );
 }

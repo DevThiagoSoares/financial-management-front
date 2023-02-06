@@ -39,7 +39,7 @@ export function ModalContainer({
             padding: "2.5rem 2.5rem 0 2.5rem",
             color: colors.primary_base,
             fontSize: "1.25rem",
-            width: "1000px",
+            MaxWidth: "1000px",
           }}
         >
           {title}

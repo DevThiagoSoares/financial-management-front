@@ -47,6 +47,19 @@ export async function createLoan(
     }
   );
 }
+
+export async function CreateAFullPay(token: string, id: string): Promise<any> {
+  return await api.put(
+    "/api/loan/" + id,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
 export async function createPayment(
   token: string,
   paymentId: string,

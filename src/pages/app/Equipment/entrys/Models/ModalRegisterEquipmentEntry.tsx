@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Button,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -24,7 +25,11 @@ import {
 } from "../../../../../types/createCliente";
 import { createClientSchema } from "../../../../../utils/validation";
 
-export function ModalRegisterEquipmentEntry({ontoggle}:{ontoggle: () => void}) {
+export function ModalRegisterEquipmentEntry({
+  ontoggle,
+}: {
+  ontoggle: () => void;
+}) {
   const { open, setOpen, closeModal } = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -204,15 +209,35 @@ export function ModalRegisterEquipmentEntry({ontoggle}:{ontoggle: () => void}) {
             fixedDecimalScale
             fullWidth
           />
-          <InputLabel id="dueDatel">Prazo de Pagamento</InputLabel>
           <Controller
             control={control}
             name="dueDate"
             render={({ field }) => (
-              <Select id="dueDatel" labelId="dueDatel" {...field}>
-                <MenuItem value="1 semana">1 semana</MenuItem>
-                <MenuItem value="1 mês">1 mês</MenuItem>
-              </Select>
+              <>
+                <Select
+                  id="dueDatel"
+                  label="Prazo de Pagamento"
+                  labelId="dueDatelId"
+                  defaultValue="Prazo de Pagamento"
+                  {...field}
+                >
+                  <MenuItem value={"Prazo de Pagamento"}>
+                    Prazo de Pagamento
+                  </MenuItem>
+                  <MenuItem value="1 semana">1 semana</MenuItem>
+                  <MenuItem value="1 mês">1 mês</MenuItem>
+                </Select>
+                {errors.dueDate?.message && (
+                  <FormHelperText
+                    sx={{
+                      color: "red",
+                    }}
+                  >
+                    {" "}
+                    {errors.dueDate.message}{" "}
+                  </FormHelperText>
+                )}
+              </>
             )}
           />
           <Box
