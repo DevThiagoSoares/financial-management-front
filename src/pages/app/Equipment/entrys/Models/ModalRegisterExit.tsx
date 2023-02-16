@@ -78,7 +78,8 @@ export function ModalRegisterExit({
       field: "interest_rate",
       headerName: "Taxa de Juros",
       width: 100,
-      align: "left",
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => {
         return params.value + "%";
       },
@@ -87,7 +88,8 @@ export function ModalRegisterExit({
       field: "value_loan",
       headerName: "Valor do Empréstimo",
       width: 100,
-      align: "left",
+      headerAlign: "center",
+      align: "center",
       renderCell: (param) => {
         return new Intl.NumberFormat("pt-BR", {
           style: "currency",
@@ -99,7 +101,8 @@ export function ModalRegisterExit({
       field: "rest_loan",
       headerName: "Valor Restante",
       width: 100,
-      align: "left",
+      headerAlign: "center",
+      align: "center",
       renderCell: (param) => {
         return new Intl.NumberFormat("pt-BR", {
           style: "currency",
@@ -110,8 +113,9 @@ export function ModalRegisterExit({
     {
       field: "payment_settled",
       headerName: "Pagamento Quitado",
+      headerAlign: "center",
+      align: "center",
       width: 100,
-      align: "left",
       renderCell: (param) => {
         return param.value ? "Sim" : "Não";
       },
@@ -119,8 +123,9 @@ export function ModalRegisterExit({
     {
       field: "startDate",
       headerName: "Data de Início",
+      headerAlign: "center",
+      align: "center",
       width: 100,
-      align: "left",
       renderCell: (param) => {
         return new Intl.DateTimeFormat("pt-BR").format(new Date(param.value));
       },
@@ -128,6 +133,8 @@ export function ModalRegisterExit({
     {
       field: "dueDate",
       headerName: "Data de Vencimento",
+      headerAlign: "center",
+      align: "center",
       renderCell: (param) => {
         return new Intl.DateTimeFormat("pt-BR").format(new Date(param.value));
       },
@@ -135,7 +142,9 @@ export function ModalRegisterExit({
     {
       field: "actions",
       headerName: "Ações",
-      headerAlign: "left",
+      headerAlign: "center",
+      width: 600,
+      align: "center",
       renderCell: (param) => {
         return (
           <>
@@ -143,15 +152,16 @@ export function ModalRegisterExit({
               variant="contained"
               color="info"
               onClick={() => handleOpenFullPay(param.row.id)}
+              sx={{ mr: .3 }}
             >
-              Pagar a divida
+              Total
             </Button>
             <Button
               variant="contained"
               color="primary"
               onClick={() => handleOpenLoanPayment(param.row.id)}
             >
-              Registrar Pagamento
+              Parcial
             </Button>
           </>
         );

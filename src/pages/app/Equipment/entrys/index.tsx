@@ -76,16 +76,19 @@ export function Entrys() {
       field: "name",
       headerName: "Nome",
       headerAlign: "center",
+      align: "center",
     },
     {
       field: "data",
       headerName: "Data do Emprestimo",
       headerAlign: "center",
+      align: "center",
     },
     {
       field: "dataFinal",
       headerName: "Data do Pagamento",
       headerAlign: "center",
+      align: "center",
     },
     {
       field: "value_loan",
@@ -97,6 +100,7 @@ export function Entrys() {
       },
       headerName: "Valor Emprestado",
       headerAlign: "center",
+      align: "center",
     },
     {
       field: "interest_rate",
@@ -105,11 +109,13 @@ export function Entrys() {
       },
       headerName: "Juros Aplicado",
       headerAlign: "center",
+      align: "center",
     },
     {
       field: "pagar",
       headerName: "Valor a Pagar",
       headerAlign: "center",
+      align: "center",
       renderCell: (param) => {
         return new Intl.NumberFormat("pt-BR", {
           style: "currency",
@@ -121,6 +127,7 @@ export function Entrys() {
       field: "actions",
       headerName: "Ações",
       headerAlign: "center",
+      align: "center",
       renderCell: (param) => {
         return (
           <>
