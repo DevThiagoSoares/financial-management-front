@@ -105,7 +105,7 @@ export function ModalRegisterLoan({
       <ModalContainer
         open={open}
         setOpen={setOpen}
-        title="Registrar Cliente"
+        title="Registrar Empréstimo"
         subtitle=""
         maxWidth="xl"
         actions={false}
@@ -197,8 +197,8 @@ export function ModalRegisterLoan({
               type="button"
               onClick={handleSubmit(onSubmit)}
             >
-              REGISTRAR FINANCIAMENTO
-            </Button>
+              REGISTRAR 
+              </Button>
           </Box>{" "}
         </Box>
       </ModalContainer>

@@ -216,7 +216,7 @@ export function ModalRegisterExit({
       <ModalContainer
         open={open}
         setOpen={setOpen}
-        title="Adicionar Empréstimo"
+        title="Empréstimo(s)"
         subtitle="Preencha as informações para registrar pagamento."
         maxWidth="xl"
         actions={false}
@@ -229,7 +229,8 @@ export function ModalRegisterExit({
           color="primary"
           onClick={() => handleOpenLoan(id)}
         >
-          Registrar Pagamento
+          Adicionar Empréstimo
+
         </Button>
 
         {/* <TableGrid rows={rows} columns={columns} /> */}
