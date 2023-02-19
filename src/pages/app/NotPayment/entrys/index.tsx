@@ -15,6 +15,7 @@ import { api } from "../../../../services/api";
 import { getAllClients } from "../../../../services/client";
 import { useSession } from "next-auth/react";
 import { ModalRegisterLoan } from "./Models/ModalRegisterLoan";
+import { useRouter } from "next/router";
 
 export interface ClientProps {
   id: string;
@@ -61,10 +62,13 @@ export function Entrys() {
   const [updateRows, setUpdateRows] = useState<boolean>(false);
   const { data: session } = useSession();
 
+  const router = useRouter();
+
   useEffect(() => {
     async function func() {
       if (session.accessToken as string) {
-        const res = await getAllClients(session?.accessToken);
+        const type = router.pathname === "/app/NotPayment" ?  "notPayment" : "paymentConfirmed";
+        const res = await getAllClients(session?.accessToken, type);
         setRows(res.data.items);
       }
     }

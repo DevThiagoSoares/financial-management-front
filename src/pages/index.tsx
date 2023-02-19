@@ -69,7 +69,6 @@ export default function SignInSide() {
      await signIn("credentials", {
         login: data.login,
         password: data.password,
-  
         callbackUrl: `${window.location.origin}/app`,
       });
     }).catch((err) => {

@@ -1,6 +1,8 @@
 import { GetServerSideProps } from "next";
+import { unstable_getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 import { DefaultLayout } from "../../../layouts/DefaultLayouts";
+import { authOptions } from "../../api/auth/[...nextauth]";
 import { TabComponent } from "./components/TabComponent";
 
 export default function Equipaments({
@@ -19,21 +21,22 @@ export default function Equipaments({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
 
   if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: '/',
         permanent: false,
       },
-    };
+    }
   }
 
   return {
     props: {
       session,
     },
-  };
+  }
 };
+

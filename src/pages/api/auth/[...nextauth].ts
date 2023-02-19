@@ -1,9 +1,9 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { ILogin } from "../../../types/login";
 const { log, error, warn, debug } = console;
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "APP",
@@ -119,4 +119,6 @@ export default NextAuth({
   },
   // log
   debug: false,
-});
+};
+
+export default NextAuth(authOptions);

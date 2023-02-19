@@ -19,6 +19,9 @@ import { AppBar, ButtonStyled, Drawer, DrawerHeader } from "./styles";
 import { useSession, signOut, getSession } from "next-auth/react";
 import Router from "next/router";
 import { GetServerSideProps } from "next";
+import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth/next"
 
 interface AppContainerProps {
   children?: React.ReactNode;
@@ -35,7 +38,8 @@ export function AppContainer({ children }: AppContainerProps) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const { data: session } = useSession();
+ const { data: session } = useSession();
+  // const session = await unstable_getServerSession(authOptions);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -101,21 +105,21 @@ export function AppContainer({ children }: AppContainerProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
+// export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+//   const session = await getSession({ req });
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      session,
-    },
-  };
-};
+//   return {
+//     props: {
+//       session,
+//     },
+//   };
+// };

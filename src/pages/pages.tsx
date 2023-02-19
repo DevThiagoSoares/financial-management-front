@@ -3,19 +3,19 @@ import EventIcon from "@mui/icons-material/Event";
 import DevicesIcon from "@mui/icons-material/Devices";
 import { Visitors } from "../pages/app/Visitors";
 import Schedule from "../pages/app/Schedule";
-import Equipaments from "../pages/app/Equipment";
+import Equipaments from "./app/NotPayment";
 
 export const APP_PAGES = [
   {
-    title: "Clientes",
-    route: "/app/Equipment",
+    title: "Clientes Pendentes",
+    route: "/app/NotPayment",
     icon: <PeopleIcon />,
     component: <Visitors />,
     showMenu: true,
   },
   {
-    title: "Agendamentos",
-    route: "/app/Schedule",
+    title: "Clientes Pagos",
+    route: "/app/PaymentConfirmed",
     icon: <EventIcon />,
     component: <Schedule />,
     showMenu: true,

@@ -77,7 +77,7 @@ export default function SignUpSide() {
       isAdm,
     }).then(() => {
       enqueueSnackbar("Usuario cadastrado com sucesso", { variant: "info" });
-      Router.push("/");
+      Router.push("/app");
     });
   };
 

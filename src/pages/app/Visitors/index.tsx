@@ -45,7 +45,7 @@ export function Visitors() {
       <ToastContainer />
 
       <CreateVisitorsModal updateVisitorsList={updateVisitorsList} />
-      <ToolbarContainer title="Empretimo" captionButton="Cadastrar Credor" />
+      <ToolbarContainer title="Emprestimo" captionButton="Cadastrar Credor" />
       <TableGrid rows={personals} columns={columns} />
     </>
   );

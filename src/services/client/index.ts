@@ -17,8 +17,8 @@ export async function createClient(
   });
 }
 
-export async function getAllClients(token: string): Promise<any> {
-  return await api.get("/api/client", {
+export async function getAllClients(token: string, type: string): Promise<any> {
+  return await api.get("/api/client/" + type, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
