@@ -2,10 +2,9 @@ import { Token } from "@mui/icons-material";
 import { Box, Button, Divider, TextField } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { log } from "console";
-import router from "next/router";
 import { useEffect, useState } from "react";
 import { ModalContainer } from "../../../../../components/ModalContainer";
-import { getLoanNotPayment, getLoanPayment } from "../../../../../services/client";
+import { getLoanNotPayment } from "../../../../../services/client";
 import { useModal } from "../../../../../shared/hooks/useModal";
 import { table, tableContainer } from "../../exits/TableGrid/styles";
 import { TableGrid } from "../TableGrid";
@@ -28,7 +27,7 @@ interface LoanProps {
   value_loan: number;
 }
 
-export function ModalRegisterExit({
+export function ModalNotPayment({
   token,
   id,
 }: {
@@ -67,10 +66,7 @@ export function ModalRegisterExit({
   };
   useEffect(() => {
     async function data() {
-      const type = router.pathname === "/app/NotPayment" ? "false" : "true";
-      console.log("opa", type);
-
-      const response = await getLoanPayment(token, id, type);
+      const response = await getLoanNotPayment(token, id);
       setRows(response?.data);
     }
     data();

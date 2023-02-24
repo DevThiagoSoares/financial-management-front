@@ -25,13 +25,22 @@ export async function getAllClients(token: string, type: string): Promise<any> {
   });
 }
 
-export async function getClient(token: string, id: string): Promise<any> {
-  return await api.get("/api/client/" + id, {
+export async function getLoanNotPayment(token: string, id: string): Promise<any> {
+  return await api.get("/api/loan/false/" + id, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 }
+
+export async function getLoanPayment(token: string, id: string, type: string): Promise<any> {
+  return await api.get(`/api/loan/${type}/` + id, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 export async function createLoan(
   token: string,
   id: string,

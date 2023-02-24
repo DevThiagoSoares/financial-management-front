@@ -3,7 +3,6 @@ import EventIcon from "@mui/icons-material/Event";
 import DevicesIcon from "@mui/icons-material/Devices";
 import { Visitors } from "../pages/app/Visitors";
 import Schedule from "../pages/app/Schedule";
-import Equipaments from "./app/NotPayment";
 
 export const APP_PAGES = [
   {

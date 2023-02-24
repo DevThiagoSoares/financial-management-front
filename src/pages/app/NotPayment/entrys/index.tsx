@@ -16,6 +16,8 @@ import { getAllClients } from "../../../../services/client";
 import { useSession } from "next-auth/react";
 import { ModalRegisterLoan } from "./Models/ModalRegisterLoan";
 import { useRouter } from "next/router";
+import { ModalRegisterPayment } from "./Models/ModalRegisterPayment";
+import { ModalNotPayment } from "./Models/ModalNotPayment";
 
 export interface ClientProps {
   id: string;
@@ -46,6 +48,7 @@ export function Entrys() {
   const [rows, setRows] = useState<ClientProps[]>([]);
   const { setOpen } = useModal();
   const [type, setType] = useState<{
+    payment: JSX.Element;
     entry: boolean;
     exit: boolean;
     view: boolean;
@@ -67,7 +70,7 @@ export function Entrys() {
   useEffect(() => {
     async function func() {
       if (session.accessToken as string) {
-        const type = router.pathname === "/app/NotPayment" ?  "notPayment" : "paymentConfirmed";
+        const type = router.pathname === "/app/NotPayment" ? "notPayment" : "paymentConfirmed";
         const res = await getAllClients(session?.accessToken, type);
         setRows(res.data.items);
       }
@@ -133,12 +136,15 @@ export function Entrys() {
       headerAlign: "center",
       align: "center",
       renderCell: (param) => {
+        console.log()
         return (
           <>
             <Button
               variant="contained"
               color="primary"
-              onClick={() => handleOpenModalExit(param.row.id)}
+              onClick={() => {
+                handleOpenModalExit(param.row.id)
+              }}
             >
               Ver
             </Button>
@@ -209,6 +215,7 @@ export function Entrys() {
     setId(idClient);
   };
 
+
   const handleOpenCancel = () => {
     setUpdateRows(!updateRows);
   };
@@ -239,6 +246,7 @@ export function Entrys() {
         // exit={handleOpenModalExit(rows.id)}
         view={handleOpenModalView}
         print={handleOpenModalPrint}
+
       />
       {type.entry && (
         <ModalRegisterEquipmentEntry ontoggle={handleOpenCancel} />

@@ -17,7 +17,7 @@ import { Content } from "./Content";
 import LogoCore from "../../assets/icons/logocore.svg";
 import { AppBar, ButtonStyled, Drawer, DrawerHeader } from "./styles";
 import { useSession, signOut, getSession } from "next-auth/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth";
@@ -34,11 +34,12 @@ export function AppContainer({ children }: AppContainerProps) {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+  const router = useRouter()
 
   const handleDrawerClose = () => {
     setOpen(false);
   };
- const { data: session } = useSession();
+  const { data: session } = useSession();
   // const session = await unstable_getServerSession(authOptions);
   return (
     <Box sx={{ display: "flex" }}>
@@ -60,7 +61,9 @@ export function AppContainer({ children }: AppContainerProps) {
             </IconButton>
             {/* <img src={LogoCore} alt="Logo do Core" /> */}
             <Divider orientation="vertical" variant="middle" flexItem />
-            <Typography color="primary" variant="body2" noWrap component="div">
+            <Typography color="primary" variant="body2" noWrap component="button" onClick={() => {
+              router.push("/app")
+            }} sx={{ background: 'none', border: 'none' }} >
               Financiero
             </Typography>
           </Box>
