@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  financial-ui:
+    image: financial-ui:latest
+    build:
+      dockerfile: Dockerfile
+      context: .
+      args:
+        NODE_ENV: ${NODE_ENV}
+        PORT: ${PORT}
+    container_name: financial-ui
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge

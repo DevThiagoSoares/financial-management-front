@@ -64,7 +64,7 @@ export function AppContainer({ children }: AppContainerProps) {
             <Typography color="primary" variant="body2" noWrap component="button" onClick={() => {
               router.push("/app")
             }} sx={{ background: 'none', border: 'none' }} >
-              Financiero
+              Financeiro
             </Typography>
           </Box>
           <Box display="flex" alignItems="center" color="primary">
