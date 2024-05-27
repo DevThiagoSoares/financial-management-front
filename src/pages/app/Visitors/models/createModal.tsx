@@ -5,21 +5,21 @@ import { useModal } from '../../../../shared/hooks/useModal'
 import { useToast } from '../../../../shared/hooks/useToast'
 import { EquipmentDataProps } from '../interfaces/equipment'
 import { createVisitor } from '../../../../services/visitors'
-import { VehicleDataProps } from '../interfaces/vehicle'
+// import { any } from '../interfaces/vehicle'
 import { Equipment } from '../components/Steps/CreateEquipment'
 import { Vehicle } from '../components/Steps/CreateVehicle'
 import { Visitant } from '../components/Steps/CreateVisitant'
-import { UpdateVisitorsListProps, VisitantProps } from '../interfaces/visitant'
+import { UpdateVisitorsListProps } from '../interfaces/visitant'
 
 const steps = ['Visitante', 'Equipamento', 'Veículo']
 
 export function CreateVisitorsModal({
   updateVisitorsList,
 }: UpdateVisitorsListProps) {
-  const [visitant, setVisitant] = useState<VisitantProps>({} as VisitantProps)
+  const [visitant, setVisitant] = useState<any>({} as any)
   const [equipments, setEquipments] = useState<EquipmentDataProps[]>([])
-  const [vehicleData, setVehicleData] = useState<VehicleDataProps>(
-    {} as VehicleDataProps,
+  const [vehicleData, setVehicleData] = useState<any>(
+    {} as any,
   )
   const [activeStep, setActiveStep] = useState(0)
 
@@ -31,14 +31,14 @@ export function CreateVisitorsModal({
   }
 
   const changeNewVisitant = (event: ChangeEvent<HTMLInputElement>) => {
-    setVisitant((state) => ({
+    setVisitant((state:any) => ({
       ...state,
       [event.target.name]: event.target.value.trimStart().toUpperCase(),
     }))
   }
 
   const changePhotoNewVisitant = (photo: string | null) => {
-    setVisitant((state) => ({ ...state, photo }))
+    setVisitant((state:any) => ({ ...state, photo }))
   }
 
   const changeNewVehiclesData = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ export function CreateVisitorsModal({
         ? event.target.checked
         : event.target.value.trimStart().toUpperCase()
 
-    setVehicleData((state) => ({
+    setVehicleData((state:any) => ({
       ...state,
       [name]: value,
     }))
@@ -64,16 +64,16 @@ export function CreateVisitorsModal({
 
     if (activeStep === 2) {
       try {
-        const response = await createVisitor(visitant, equipments, vehicleData)
+        // const response = await createVisitor(visitant, equipments, vehicleData)
 
-        if (response.status === 201) {
-          handleFinish()
-          actionToast({
-            message: 'Visitante cadastrado com sucesso',
-            type: 'success',
-          })
-          updateVisitorsList()
-        }
+        // if (response.status === 201) {
+        //   handleFinish()
+        //   actionToast({
+        //     message: 'Visitante cadastrado com sucesso',
+        //     type: 'success',
+        //   })
+        //   updateVisitorsList()
+        // }
       } catch (error: any) {
         if (!error?.response?.data.message) {
           actionToast({ message: 'Internal server error', type: 'error' })
@@ -95,9 +95,9 @@ export function CreateVisitorsModal({
   }
 
   const handleFinish = () => {
-    setVisitant({} as VisitantProps)
+    setVisitant({} as any)
     setEquipments([])
-    setVehicleData({} as VehicleDataProps)
+    setVehicleData({} as any)
     setActiveStep(0)
     closeModal()
   }

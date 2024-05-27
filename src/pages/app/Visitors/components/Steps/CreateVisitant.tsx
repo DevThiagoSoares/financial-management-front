@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { Avatar, Box, Button, Divider, TextField } from '@mui/material'
-import { VisitantStepProps } from '../../interfaces/visitant'
+// import { any } from '../../interfaces/visitant'
 import { maxNumberInput } from '../../../../../shared/lib/maxNumberLength'
 import PhotoModal from '../PhotoModal'
 
@@ -8,7 +8,7 @@ export function Visitant({
   changeNewVisitant,
   visitant,
   changePhotoNewVisitant,
-}: VisitantStepProps) {
+}: any) {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {

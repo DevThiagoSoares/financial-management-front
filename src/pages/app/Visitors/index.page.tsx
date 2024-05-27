@@ -7,6 +7,7 @@ import { CreateVisitorsModal } from "./models/createModal";
 import { PersonalDataProps } from "./interfaces/personal";
 import { findManyVisitors } from "../../../services/visitors";
 import { ToastContainer } from "../../../components/ToastContainer";
+import { GetServerSideProps } from "next";
 
 export function Visitors() {
   const [personals, setPersonals] = useState<PersonalDataProps[]>([]);
@@ -50,3 +51,9 @@ export function Visitors() {
     </>
   );
 }
+
+export default Visitors;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    return { props: { } };
+};

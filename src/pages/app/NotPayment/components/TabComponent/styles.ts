@@ -1,4 +1,4 @@
-import { colors } from '../../../../shared/themes'
+import { colors } from '../../../../../shared/themes'
 
 export const titleStyle = {
   fontWeight: 500,

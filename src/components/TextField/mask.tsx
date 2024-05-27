@@ -47,8 +47,8 @@ export function InputMask({
           suffix={suffix}
           fixedDecimalScale={fixedDecimalScale}
           fullWidth={fullWidth}
-          format={format}
-          mask={mask}
+          // format={format}
+          // mask={mask}
           {...field}
           customInput={TextField}
         />

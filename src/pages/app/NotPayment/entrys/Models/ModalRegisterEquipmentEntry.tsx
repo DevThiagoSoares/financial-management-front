@@ -110,7 +110,7 @@ export function ModalRegisterEquipmentEntry({
       closeModal();
     } catch (error) {
       enqueueSnackbar(
-        `${error?.message ?? "Ocorreu um erro ao cadastar o cliente"}`,
+        `${(error as Error)?.message ?? "Ocorreu um erro ao cadastar o cliente"}`,
         {
           variant: "error",
         }

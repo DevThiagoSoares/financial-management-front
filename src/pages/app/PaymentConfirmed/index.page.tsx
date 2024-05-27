@@ -2,8 +2,8 @@ import { GetServerSideProps } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 import { DefaultLayout } from "../../../layouts/DefaultLayouts";
-import { authOptions } from "../../api/auth/[...nextauth]";
-import { TabComponent } from "./components/TabComponent";
+import { authOptions } from "../../api/auth/[...nextauth].page";
+import { TabComponent } from "../NotPayment/components/TabComponent";
 
 export default function Equipaments({
   session,
