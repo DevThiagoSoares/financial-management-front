@@ -9,9 +9,8 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material'
-import { VehicleProps } from '../../interfaces/vehicle'
 
-export function Vehicle({ changeNewVehicleData, vehicleData }: VehicleProps) {
+export function Vehicle({ changeNewVehicleData, vehicleData }: any) {
   return (
     <>
       <Box

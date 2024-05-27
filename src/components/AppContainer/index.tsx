@@ -19,7 +19,7 @@ import { AppBar, ButtonStyled, Drawer, DrawerHeader } from "./styles";
 import { useSession, signOut, getSession } from "next-auth/react";
 import Router, { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import { authOptions } from "../../pages/api/auth/[...nextauth].page";
 import { unstable_getServerSession } from "next-auth";
 // import { getServerSession } from "next-auth/next"
 

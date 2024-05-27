@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -19,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createUser } from "../services/user";
 import Router from "next/router";
 import { useSnackbar } from "notistack";
+import { GetServerSideProps } from "next";
 
 function Copyright(props: any) {
   return (

@@ -9,7 +9,7 @@ import { Button, IconButton } from "@mui/material";
 interface TableGridProps {
   rows: any[];
   columns: GridColDef[];
-  exit: () => void;
+  exit?: () => void;
   view: () => void;
   print: () => void;
 }

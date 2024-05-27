@@ -48,7 +48,7 @@ export function Entrys() {
   const [rows, setRows] = useState<ClientProps[]>([]);
   const { setOpen } = useModal();
   const [type, setType] = useState<{
-    payment: JSX.Element;
+    payment?: JSX.Element;
     entry: boolean;
     exit: boolean;
     view: boolean;
@@ -69,6 +69,7 @@ export function Entrys() {
 
   useEffect(() => {
     async function func() {
+      if (session)
       if (session.accessToken as string) {
         const type = router.pathname === "/app/NotPayment" ? "notPayment" : "paymentConfirmed";
         const res = await getAllClients(session?.accessToken, type);
@@ -76,7 +77,7 @@ export function Entrys() {
       }
     }
     func();
-  }, [session.accessToken, updateRows]);
+  }, [session?.accessToken, updateRows]);
 
   const columns: GridColDef[] = [
     {

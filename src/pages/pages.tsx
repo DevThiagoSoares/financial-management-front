@@ -1,8 +1,8 @@
 import PeopleIcon from "@mui/icons-material/People";
 import EventIcon from "@mui/icons-material/Event";
 import DevicesIcon from "@mui/icons-material/Devices";
-import { Visitors } from "../pages/app/Visitors";
-import Schedule from "../pages/app/Schedule";
+import { Visitors } from "../pages/app/Visitors/index.page";
+import Schedule from "../pages/app/Schedule/index.page";
 
 export const APP_PAGES = [
   {

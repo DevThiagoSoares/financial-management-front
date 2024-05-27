@@ -5,6 +5,7 @@ import { ScheduleProps } from "./interfaces";
 import { columns } from "./table/columns";
 import { CreateModal } from "./models/createModal";
 import { DefaultLayout } from "../../../layouts/DefaultLayouts";
+import { GetServerSideProps } from "next";
 
 export default function Schedule() {
   const [rows, setRows] = useState<ScheduleProps[]>([]);

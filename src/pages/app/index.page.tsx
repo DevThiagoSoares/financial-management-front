@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import Router from "next/router";
 import { unstable_getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]";
+import { authOptions } from "../api/auth/[...nextauth].page";
 
 export default function page() {
   return (
